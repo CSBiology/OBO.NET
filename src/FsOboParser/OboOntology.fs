@@ -1,13 +1,15 @@
 ﻿namespace FsOboParser
 
-open Obo
+open DBXref
+open OboTerm
+open OboTypeDef
 
 open ISADotNet
 
 open System
 
 
-module Obo =
+module OboOntology =
 
     /// Ontology containing Obo Terms and Obo Type Defs (OBO 1.2)
     type OboOntology =

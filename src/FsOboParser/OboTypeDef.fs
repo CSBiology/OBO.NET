@@ -1,12 +1,12 @@
 ﻿namespace FsOboParser
 
-open Obo
+open DBXref
 
 open System
 
 
 /// Functions for parsing and querying an OBO ontology.
-module Obo =
+module OboTypeDef =
 
     /// Models the relationship between OBO Terms 
     type OboTypeDef = 

@@ -1,9 +1,9 @@
 ﻿namespace FsOboParser
 
-open Obo
+open DBXref
 
 
-module Obo =
+module TermSynonym =
 
 
     //The value consists of a quote enclosed synonym text, a scope identifier, an optional synonym type name, and an optional dbxref list, like this:

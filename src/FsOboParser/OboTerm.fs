@@ -1,13 +1,14 @@
 ﻿namespace FsOboParser
 
-open Obo
+open DBXref
+open TermSynonym
 
 open ISADotNet
 
 open System
 
 
-module Obo =
+module OboTerm =
 
     /// Models the entities in an Obo Ontology
     type OboTerm = 

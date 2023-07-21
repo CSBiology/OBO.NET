@@ -3,7 +3,7 @@
 open System
 
 
-module Obo =
+module DBXref =
 
     //Dbxref definitions take the following form:
 
