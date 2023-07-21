@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsOboParser", "src\FsOboParser\FsOboParser.fsproj", "{7812F4E0-128E-437C-92CF-84C9F621C459}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsOboParser.Tests", "tests\FsOboParser.Tests\FsOboParser.Tests.fsproj", "{AADEED8F-ABA6-4401-978E-B80CBC9589BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7812F4E0-128E-437C-92CF-84C9F621C459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7812F4E0-128E-437C-92CF-84C9F621C459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7812F4E0-128E-437C-92CF-84C9F621C459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
