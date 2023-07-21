@@ -3,9 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsOboParser", "src\FsOboParser\FsOboParser.fsproj", "{7812F4E0-128E-437C-92CF-84C9F621C459}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC99056C-0431-4FBE-8396-DAB1FFFF2A8F}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsOboParser.Tests", "tests\FsOboParser.Tests\FsOboParser.Tests.fsproj", "{AADEED8F-ABA6-4401-978E-B80CBC9589BC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A989E8E9-BC2B-4E53-97EC-FE0E9ED342F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5FA53C60-C472-4A99-A3F7-8098B4606CBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{13CB1D92-20F8-4489-9C1A-F06DDFCF3C37}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		global.json = global.json
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj", "{4A02631E-8D3F-4130-8545-C0B7A7424B90}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsOboParser", "src\FsOboParser\FsOboParser.fsproj", "{9B04A234-E7AC-4960-99A2-3E1B7B05F32A}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FsOboParser.Tests", "tests\FsOboParser.Tests\FsOboParser.Tests.fsproj", "{0A4EF63F-C659-4AB6-AF88-CB444A98C434}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +29,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7812F4E0-128E-437C-92CF-84C9F621C459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7812F4E0-128E-437C-92CF-84C9F621C459}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7812F4E0-128E-437C-92CF-84C9F621C459}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7812F4E0-128E-437C-92CF-84C9F621C459}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AADEED8F-ABA6-4401-978E-B80CBC9589BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A02631E-8D3F-4130-8545-C0B7A7424B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A02631E-8D3F-4130-8545-C0B7A7424B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A02631E-8D3F-4130-8545-C0B7A7424B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A02631E-8D3F-4130-8545-C0B7A7424B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B04A234-E7AC-4960-99A2-3E1B7B05F32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B04A234-E7AC-4960-99A2-3E1B7B05F32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B04A234-E7AC-4960-99A2-3E1B7B05F32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B04A234-E7AC-4960-99A2-3E1B7B05F32A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A4EF63F-C659-4AB6-AF88-CB444A98C434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A4EF63F-C659-4AB6-AF88-CB444A98C434}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A4EF63F-C659-4AB6-AF88-CB444A98C434}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A4EF63F-C659-4AB6-AF88-CB444A98C434}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A02631E-8D3F-4130-8545-C0B7A7424B90} = {5FA53C60-C472-4A99-A3F7-8098B4606CBE}
+		{9B04A234-E7AC-4960-99A2-3E1B7B05F32A} = {BC99056C-0431-4FBE-8396-DAB1FFFF2A8F}
+		{0A4EF63F-C659-4AB6-AF88-CB444A98C434} = {A989E8E9-BC2B-4E53-97EC-FE0E9ED342F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {54B9E6DB-7B93-4B11-AF6D-F46EF21F9781}
