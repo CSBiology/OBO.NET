@@ -3,6 +3,12 @@
 open System
 
 
+type DBXref = {
+        Name        : string
+        Description : string
+        Modifiers   : string
+    }
+
 module DBXref =
 
     //Dbxref definitions take the following form:
@@ -26,11 +32,6 @@ module DBXref =
     //def: "A ribonucleoprotein complex that contains an RNA molecule of the snoRNA family, and cleaves the rRNA precursor as part of rRNA transcript processing. It also has other roles: In S. cerevisiae it is involved in cell cycle-regulated degradation of daughter cell-specific mRNAs, while in mammalian cells it also enters the mitochondria and processes RNAs to create RNA primers for DNA replication." [GOC:sgd_curators, PMID:10690410, Add to Citavi project by Pubmed ID PMID:14729943, Add to Citavi project by Pubmed ID PMID:7510714] Add to Citavi project by Pubmed ID
 
     //Note that the trailing modifiers (like all trailing modifiers) do not need to be decoded or round-tripped by parsers; trailing modifiers can always be optionally ignored. However, all parsers must be able to gracefully ignore trailing modifiers. It is important to recognize that lines which accept a dbxref list may have a trailing modifier for each dbxref in the list, and another trailing modifier for the line itself.
-    type DBXref = {
-        Name        : string
-        Description : string
-        Modifiers   : string
-    }
 
     let trimComment (line : string) = 
         line.Split('!').[0].Trim()
@@ -38,7 +39,7 @@ module DBXref =
     let private xrefRegex = 
         Text.RegularExpressions.Regex("""(?<xrefName>^([^"{])*)(\s?)(?<xrefDescription>\"(.*?)\")?(\s?)(?<xrefModifiers>\{(.*?)}$)?""")
 
-    let parseDBXref (v:string) =
+    let parseDBXref (v : string) =
         let matches = xrefRegex.Match(v.Trim()).Groups
         {
             Name = matches.Item("xrefName").Value

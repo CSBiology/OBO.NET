@@ -1,6 +1,6 @@
 ﻿namespace FsOboParser
 
-open OboTerm
+//open OboTerm
 
 
 ////########################################

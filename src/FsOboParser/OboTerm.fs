@@ -8,11 +8,9 @@ open ISADotNet
 open System
 
 
-module OboTerm =
-
-    /// Models the entities in an Obo Ontology
-    type OboTerm = 
-        {
+/// Models the entities in an OBO Ontology.
+type OboTerm = 
+    {
 
         ///The unique id of the current term. 
         //Cardinality: exactly one.
@@ -181,269 +179,238 @@ module OboTerm =
         //Note that although this tag is defined in obof1.4, it can be used in obof1.2 harmlessly
         CreationDate : string
 
+    }
+
+    /// Create an OBO Term from its field values.
+    static member make id name isAnonymous altIds definition comment subsets synonyms xrefs isA         
+        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider propertyValues builtIn    
+        createdBy creationDate = {
+        Id              = id
+        Name            = name
+        IsAnonymous     = isAnonymous 
+        AltIds          = altIds
+        Definition      = definition
+        Comment         = comment
+        Subsets         = subsets
+        Synonyms        = synonyms
+        Xrefs           = xrefs
+        IsA             = isA
+        IntersectionOf  = intersectionOf
+        UnionOf         = unionOf
+        DisjointFrom    = disjointFrom
+        Relationships   = relationships
+        IsObsolete      = isObsolete
+        Replacedby      = replacedby
+        Consider        = consider
+        PropertyValues  = propertyValues
+        BuiltIn         = builtIn
+        CreatedBy       = createdBy
+        CreationDate    = creationDate
+    }
+
+    /// Creates an OBO Term from its field values.
+    static member Create (id, ?Name, ?IsAnonymous, ?AltIds, ?Definition, ?Comment, ?Subsets, ?Synonyms, ?Xrefs, ?IsA,
+        ?IntersectionOf, ?UnionOf, ?DisjointFrom, ?Relationships, ?IsObsolete, ?Replacedby, ?Consider, ?PropertyValues, ?BuiltIn,
+        ?CreatedBy, ?CreationDate) =
+
+        {
+            Id              = id
+            Name            = Option.defaultValue "" Name
+            IsAnonymous     = Option.defaultValue false IsAnonymous 
+            AltIds          = Option.defaultValue [] AltIds
+            Definition      = Option.defaultValue "" Definition
+            Comment         = Option.defaultValue "" Comment
+            Subsets         = Option.defaultValue [] Subsets
+            Synonyms        = Option.defaultValue [] Synonyms
+            Xrefs           = Option.defaultValue [] Xrefs
+            IsA             = Option.defaultValue [] IsA
+            IntersectionOf  = Option.defaultValue [] IntersectionOf
+            UnionOf         = Option.defaultValue [] UnionOf
+            DisjointFrom    = Option.defaultValue [] DisjointFrom
+            Relationships   = Option.defaultValue [] Relationships
+            IsObsolete      = Option.defaultValue false IsObsolete
+            Replacedby      = Option.defaultValue [] Replacedby
+            Consider        = Option.defaultValue [] Consider
+            PropertyValues  = Option.defaultValue [] PropertyValues
+            BuiltIn         = Option.defaultValue false BuiltIn
+            CreatedBy       = Option.defaultValue "" CreatedBy
+            CreationDate    = Option.defaultValue "" CreationDate
         }
 
-        /// Create an Obo Term from its field values
-        static member make id name isAnonymous altIds definition comment subsets synonyms xrefs isA         
-            intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider propertyValues builtIn    
-            createdBy creationDate = {  
+    /// Reads an OBO Term from lines in "key:value" style.
+    static member fromLines verbose (en:Collections.Generic.IEnumerator<string>) lineNumber 
+        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+        propertyValues builtIn createdBy creationDate =
 
-            Id              = id          
-            Name            = name        
-            IsAnonymous     = isAnonymous 
-            AltIds          = altIds      
-            Definition      = definition  
-            Comment         = comment     
-            Subsets         = subsets     
-            Synonyms        = synonyms    
-            Xrefs           = xrefs     
-            IsA             = isA         
-            IntersectionOf  = intersectionOf
-            UnionOf         = unionOf       
-            DisjointFrom    = disjointFrom  
-            Relationships   = relationships  
-            IsObsolete      = isObsolete    
-            Replacedby      = replacedby    
-            Consider        = consider      
-            PropertyValues  = propertyValues
-            BuiltIn         = builtIn       
-            CreatedBy       = createdBy     
-            CreationDate    = creationDate  
-
-        }
-
-        /// Create an Obo Term from its field values
-        static member Create (id,?Name,?IsAnonymous,?AltIds,?Definition,?Comment,?Subsets,?Synonyms,?Xrefs,?IsA,         
-            ?IntersectionOf,?UnionOf,?DisjointFrom,?Relationships,?IsObsolete,?Replacedby,?Consider,?PropertyValues,?BuiltIn,
-            ?CreatedBy,?CreationDate) =
-
-            {
-                    Id              = id
-                    Name            = Option.defaultValue "" Name        
-                    IsAnonymous     = Option.defaultValue false IsAnonymous 
-                    AltIds          = Option.defaultValue [] AltIds      
-                    Definition      = Option.defaultValue "" Definition  
-                    Comment         = Option.defaultValue "" Comment     
-                    Subsets         = Option.defaultValue [] Subsets     
-                    Synonyms        = Option.defaultValue [] Synonyms    
-                    Xrefs           = Option.defaultValue [] Xrefs     
-                    IsA             = Option.defaultValue [] IsA         
-                    IntersectionOf  = Option.defaultValue [] IntersectionOf
-                    UnionOf         = Option.defaultValue [] UnionOf       
-                    DisjointFrom    = Option.defaultValue [] DisjointFrom  
-                    Relationships   = Option.defaultValue [] Relationships  
-                    IsObsolete      = Option.defaultValue false IsObsolete    
-                    Replacedby      = Option.defaultValue [] Replacedby    
-                    Consider        = Option.defaultValue [] Consider      
-                    PropertyValues  = Option.defaultValue [] PropertyValues
-                    BuiltIn         = Option.defaultValue false BuiltIn       
-                    CreatedBy       = Option.defaultValue "" CreatedBy     
-                    CreationDate    = Option.defaultValue "" CreationDate  
-
-                }
-
-        /// Read an Obo Term from lines in "key:value" style
-        static member fromLines verbose (en:Collections.Generic.IEnumerator<string>) lineNumber 
-            id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-            intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-            propertyValues builtIn createdBy creationDate =
-
-            if en.MoveNext() then
-                let split = (en.Current |> trimComment).Split([|": "|], System.StringSplitOptions.None)
-                match split.[0] with
-                | "id"              -> 
-                    let v = split.[1..] |> String.concat ": "
-                    OboTerm.fromLines verbose  en (lineNumber + 1)
-                        v name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+        if en.MoveNext() then
+            let split = (en.Current |> trimComment).Split([|": "|], System.StringSplitOptions.None)
+            match split.[0] with
+            | "id"              -> 
+                let v = split.[1..] |> String.concat ": "
+                OboTerm.fromLines verbose  en (lineNumber + 1)
+                    v name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
         
-                | "name"            -> 
-                    let v = split.[1..] |> String.concat ": "
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id v isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "name"            -> 
+                let v = split.[1..] |> String.concat ": "
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id v isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "is_anonymous"    ->
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name true altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "is_anonymous"    ->
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name true altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "alt_id"              -> 
-                    let v = split.[1..] |> String.concat ": "
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous (v::altIds) definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "alt_id"              -> 
+                let v = split.[1..] |> String.concat ": "
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous (v :: altIds) definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "def"              -> 
-                    let v = split.[1..] |> String.concat ": "
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds v comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "def"              -> 
+                let v = split.[1..] |> String.concat ": "
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds v comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "comment"             -> 
-                    let v = split.[1..] |> String.concat ": "
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition v subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "comment"             -> 
+                let v = split.[1..] |> String.concat ": "
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition v subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "subset"              -> 
-                    let v = split.[1..] |> String.concat ": "
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment (v::subsets) synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "subset"              -> 
+                let v = split.[1..] |> String.concat ": "
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment (v::subsets) synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | synonymTag when synonymTag.Contains("synonym")              -> 
-                    let scope =
-                        match synonymTag with
-                        | "exact_synonym"   -> Some Exact
-                        | "narrow_synonym"  -> Some Narrow
-                        | "broad_synonym"   -> Some Broad
-                        | _                 -> None
-                    let v = parseSynonym scope lineNumber (split.[1..] |> String.concat ": ")
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets (v::synonyms) xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | synonymTag when synonymTag.Contains("synonym")              -> 
+                let scope =
+                    match synonymTag with
+                    | "exact_synonym"   -> Some Exact
+                    | "narrow_synonym"  -> Some Narrow
+                    | "broad_synonym"   -> Some Broad
+                    | _                 -> None
+                let v = parseSynonym scope lineNumber (split.[1..] |> String.concat ": ")
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets (v::synonyms) xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "xref" | "xref_analog" | "xref_unk" -> 
-                    let v = (split.[1..] |> String.concat ": ") |> parseDBXref
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms (v::xrefs) isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "xref" | "xref_analog" | "xref_unk" -> 
+                let v = (split.[1..] |> String.concat ": ") |> parseDBXref
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms (v::xrefs) isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "is_a"              -> 
-                    let v = (split.[1..] |> String.concat ": ")
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs (v::isA)
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "is_a"              -> 
+                let v = (split.[1..] |> String.concat ": ")
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs (v::isA)
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "intersection_of"              -> 
-                    let v = (split.[1..] |> String.concat ": ")
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        (v::intersectionOf) unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "intersection_of"              -> 
+                let v = (split.[1..] |> String.concat ": ")
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    (v::intersectionOf) unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "union_of"              -> 
-                    let v = (split.[1..] |> String.concat ": ")
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf (v::unionOf) disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "union_of"              -> 
+                let v = (split.[1..] |> String.concat ": ")
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf (v::unionOf) disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
                     
-                | "disjoint_from"              -> 
-                    let v = (split.[1..] |> String.concat ": ")
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf (v::disjointFrom) relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "disjoint_from"              -> 
+                let v = (split.[1..] |> String.concat ": ")
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf (v::disjointFrom) relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
                     
-                | "relationship"              -> 
-                    let v = (split.[1..] |> String.concat ": ")
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom (v::relationships) isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+            | "relationship"              -> 
+                let v = (split.[1..] |> String.concat ": ")
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom (v::relationships) isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-                | "is_obsolete"             -> 
-                    let v = ((split.[1..] |> String.concat ": ").Trim()) 
-                    let v' = v = "true"
+            | "is_obsolete"             -> 
+                let v = ((split.[1..] |> String.concat ": ").Trim()) 
+                let v' = v = "true"
 
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships v' replacedby consider 
-                        propertyValues builtIn createdBy creationDate            
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships v' replacedby consider 
+                    propertyValues builtIn createdBy creationDate            
 
-                | "replaced_by"             -> 
-                    let v = (split.[1..] |> String.concat ": ")
+            | "replaced_by"             -> 
+                let v = (split.[1..] |> String.concat ": ")
 
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete (v::replacedby) consider 
-                        propertyValues builtIn createdBy creationDate
-
-
-                | "consider" | "use_term"            -> 
-                    let v = (split.[1..] |> String.concat ": ")
-
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby (v::consider)
-                        propertyValues builtIn createdBy creationDate
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete (v::replacedby) consider 
+                    propertyValues builtIn createdBy creationDate
 
 
-                | "builtin"             -> 
-                    let v = ((split.[1..] |> String.concat ": ").Trim()) 
-                    let v' = v = "true"
+            | "consider" | "use_term"            -> 
+                let v = (split.[1..] |> String.concat ": ")
 
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues v' createdBy creationDate
-
-                | "property_value"             -> 
-                    let v = (split.[1..] |> String.concat ": ")
-
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        (v::propertyValues) builtIn createdBy creationDate
-
-                | "created_by"             -> 
-                    let v = (split.[1..] |> String.concat ": ")
-
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn v creationDate
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby (v::consider)
+                    propertyValues builtIn createdBy creationDate
 
 
-                | "creation_date"             -> 
-                    let v = (split.[1..] |> String.concat ": ")
+            | "builtin"             -> 
+                let v = ((split.[1..] |> String.concat ": ").Trim()) 
+                let v' = v = "true"
 
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy v
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues v' createdBy creationDate
 
-                | "" -> 
-                    lineNumber,
-                    OboTerm.make id name isAnonymous 
-                        (altIds |> List.rev) 
-                        definition comment 
-                        (subsets        |> List.rev)
-                        (synonyms       |> List.rev)
-                        (xrefs          |> List.rev)
-                        (isA            |> List.rev)
-                        (intersectionOf |> List.rev)
-                        (unionOf        |> List.rev)
-                        (disjointFrom   |> List.rev)
-                        (relationships  |> List.rev)
-                        isObsolete 
-                        (replacedby     |> List.rev)
-                        (consider       |> List.rev)
-                        (propertyValues |> List.rev)
-                        builtIn 
-                        createdBy creationDate
+            | "property_value"             -> 
+                let v = (split.[1..] |> String.concat ": ")
 
-                | unknownTag -> 
-                    if verbose then printfn "[WARNING@L %i]: Found term tag <%s> that does not fit OBO flat file specifications 1.4. Skipping it..." lineNumber unknownTag
-                    OboTerm.fromLines verbose en (lineNumber + 1)
-                        id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
-                        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
-                        propertyValues builtIn createdBy creationDate
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    (v::propertyValues) builtIn createdBy creationDate
 
-            else
-                // Maybe check if id is empty
+            | "created_by"             -> 
+                let v = (split.[1..] |> String.concat ": ")
+
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn v creationDate
+
+
+            | "creation_date"             -> 
+                let v = (split.[1..] |> String.concat ": ")
+
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy v
+
+            | "" -> 
                 lineNumber,
                 OboTerm.make id name isAnonymous 
                     (altIds |> List.rev) 
@@ -462,40 +429,68 @@ module OboTerm =
                     (propertyValues |> List.rev)
                     builtIn 
                     createdBy creationDate
-                //failwithf "Unexcpected end of file."
 
-        /// Write an Obo Term to lines in "key:value" style
-        static member toLines (term : OboTerm) =
-            seq {
-                yield "id: " + term.Id
-                if term.IsAnonymous then yield "is_anonymous"
-                yield "name: " + term.Name
-                for altid in term.AltIds do yield $"alt_id: {altid}"
-                if term.Definition = "" |> not then yield $"def: {term.Definition}"
-                if term.Comment = "" |> not then yield $"comment: {term.Comment}"
-                for subset in term.Subsets do yield $"subset: {subset}"
-                for synonym in term.Synonyms do yield $"synonym: {synonym}"
-                for xref in term.Xrefs do yield $"xref: {xref.Name}"
-                if term.BuiltIn then yield "builtin"
-                for property_value in term.PropertyValues do yield $"property_value: {property_value}"
-                for is_a in term.IsA do yield $"is_a: {is_a}"
-                for intersection in term.IntersectionOf do yield $"intersection_of: {intersection}"
-                for union in term.UnionOf do yield $"union_of: {union}"
-                //for equivalent in term.equ do yield $"equivalent_to: {equivalent}"
-                for disjoint in term.DisjointFrom do yield $"disjoint_from: {disjoint}"
-                for relationship in term.Relationships do yield $"relationship: {relationship}"
-                for created_by in term.CreatedBy do yield $"created_by: {created_by}"
-                if term.CreationDate = "" |> not then yield $"creation_date: {term.CreationDate}"
-                if term.IsObsolete then yield "is_obsolete"
-                for replaced_by in term.Replacedby do yield $"replaced_by: {replaced_by}"
-                for consider in term.Consider do yield $"consider: {consider}"
-            }
-         
-        /// Translates a OBO `term` into an ISADotNet `OntologyAnnotation`
-        static member toOntologyAnnotation (term : OboTerm) =
-            let ref,num = OntologyAnnotation.splitAnnotation term.Id
-            OntologyAnnotation.fromString term.Name ref term.Id
+            | unknownTag -> 
+                if verbose then printfn "[WARNING@L %i]: Found term tag <%s> that does not fit OBO flat file specifications 1.4. Skipping it..." lineNumber unknownTag
+                OboTerm.fromLines verbose en (lineNumber + 1)
+                    id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
+                    intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
+                    propertyValues builtIn createdBy creationDate
 
-        /// Translates an ISADotNet `OntologyAnnotation` into a OBO `term`
-        static member ofOntologyAnnotation (term : OntologyAnnotation) =
-            OboTerm.Create(term.ShortAnnotationString,term.NameText)
+        else
+            // Maybe check if id is empty
+            lineNumber,
+            OboTerm.make id name isAnonymous 
+                (altIds |> List.rev) 
+                definition comment 
+                (subsets        |> List.rev)
+                (synonyms       |> List.rev)
+                (xrefs          |> List.rev)
+                (isA            |> List.rev)
+                (intersectionOf |> List.rev)
+                (unionOf        |> List.rev)
+                (disjointFrom   |> List.rev)
+                (relationships  |> List.rev)
+                isObsolete 
+                (replacedby     |> List.rev)
+                (consider       |> List.rev)
+                (propertyValues |> List.rev)
+                builtIn 
+                createdBy creationDate
+            //failwithf "Unexcpected end of file."
+
+    /// Writes an OBO Term to lines in "key:value" style.
+    static member toLines (term : OboTerm) =
+        seq {
+            yield "id: " + term.Id
+            if term.IsAnonymous then yield "is_anonymous"
+            yield "name: " + term.Name
+            for altid in term.AltIds do yield $"alt_id: {altid}"
+            if term.Definition = "" |> not then yield $"def: {term.Definition}"
+            if term.Comment = "" |> not then yield $"comment: {term.Comment}"
+            for subset in term.Subsets do yield $"subset: {subset}"
+            for synonym in term.Synonyms do yield $"synonym: {synonym}"
+            for xref in term.Xrefs do yield $"xref: {xref.Name}"
+            if term.BuiltIn then yield "builtin"
+            for property_value in term.PropertyValues do yield $"property_value: {property_value}"
+            for is_a in term.IsA do yield $"is_a: {is_a}"
+            for intersection in term.IntersectionOf do yield $"intersection_of: {intersection}"
+            for union in term.UnionOf do yield $"union_of: {union}"
+            //for equivalent in term.equ do yield $"equivalent_to: {equivalent}"
+            for disjoint in term.DisjointFrom do yield $"disjoint_from: {disjoint}"
+            for relationship in term.Relationships do yield $"relationship: {relationship}"
+            for created_by in term.CreatedBy do yield $"created_by: {created_by}"
+            if term.CreationDate = "" |> not then yield $"creation_date: {term.CreationDate}"
+            if term.IsObsolete then yield "is_obsolete"
+            for replaced_by in term.Replacedby do yield $"replaced_by: {replaced_by}"
+            for consider in term.Consider do yield $"consider: {consider}"
+        }
+
+    /// Translates an OBO `term` into an ISADotNet `OntologyAnnotation`.
+    static member toOntologyAnnotation (term : OboTerm) =
+        let ref,num = OntologyAnnotation.splitAnnotation term.Id
+        OntologyAnnotation.fromString term.Name ref term.Id
+
+    /// Translates an ISADotNet `OntologyAnnotation` into an OBO `term`.
+    static member ofOntologyAnnotation (term : OntologyAnnotation) =
+        OboTerm.Create(term.ShortAnnotationString,term.NameText)
