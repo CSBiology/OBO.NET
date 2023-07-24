@@ -69,7 +69,6 @@ type OboTypeDef =
     /// Creates an OBO Type Def from its field values.
     static member make id domain range name inverse_of transitive_over is_cyclic is_reflexive is_symmetric 
         is_anti_symmetric is_transitive is_metadata_tag is_class_level =
-
         {              
                 Id                  = id
                 Domain              = domain
@@ -89,7 +88,6 @@ type OboTypeDef =
     /// Creates an OBO Type Def from its field values.
     static member Create (id, domain, range, ?Name, ?Inverse_of, ?Transitive_over, ?Is_cyclic, ?Is_reflexive, ?Is_symmetric,
         ?Is_anti_symmetric, ?Is_transitive, ?Is_metadata_tag, ?Is_class_level) =
-
         {
                 Id                  = id
                 Domain              = domain

@@ -4,7 +4,54 @@ An OBO file format parser, written in F#.
 
 ## Usage
 
+### Read an OBO file
 
+```fsharp
+open FsOboParser
+
+let myOboOntology = OboOntology.fromFile true filepath
+```
+
+### Create OBO terms
+
+OOP style (adviced):
+
+```fsharp
+let myOboTerm = 
+	OboTerm.Create(
+		"TO:00000000", 
+		Name = "testTerm", 
+		CreatedBy = "myself"
+	)
+```
+
+Functional style:
+
+```fsharp
+let myOboTerm = 
+	OboTerm.create 
+		"TO:00000000" 
+		(Some "testTerm") 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		None 
+		(Some "myself") 
+		None
+```
 
 ## Develop
 

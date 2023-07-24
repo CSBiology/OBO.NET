@@ -25,10 +25,10 @@ type OboOntology =
 
     /// Reads an OBO Ontology containing term and type def stanzas from lines.
     static member fromLines verbose (input : seq<string>) =
-                
+
         let en = input.GetEnumerator()
         let rec loop (en:System.Collections.Generic.IEnumerator<string>) terms typedefs lineNumber =
-                
+
             match en.MoveNext() with
             | true ->             
                 match (en.Current |> trimComment) with
@@ -40,7 +40,7 @@ type OboOntology =
                     loop en terms (parsedTypeDef :: typedefs) lineNumber
                 | _ -> loop en terms typedefs (lineNumber + 1)
             | false -> OboOntology.create (List.rev terms) (List.rev typedefs)
-                
+
         loop en [] [] 1
 
     /// Reads an OBO Ontology containing term and type def stanzas from a file with the given path.
@@ -61,8 +61,8 @@ type OboOntology =
                 yield! OboTypeDef.toLines typedef
                 yield ""
         }
-            
-    /// Write an OBO Ontology to term and type def stanzas to a file in the given path
+
+    /// Writes an OBO Ontology to term and type def stanzas to a file in the given path.
     static member toFile (path : string) (oboOntology : OboOntology) =
         System.IO.File.WriteAllLines(path, OboOntology.toLines oboOntology)
 

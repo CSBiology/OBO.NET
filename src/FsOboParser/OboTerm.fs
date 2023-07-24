@@ -181,9 +181,9 @@ type OboTerm =
 
     }
 
-    /// Create an OBO Term from its field values.
-    static member make id name isAnonymous altIds definition comment subsets synonyms xrefs isA         
-        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider propertyValues builtIn    
+    /// Creates an OBO Term from its field values.
+    static member make id name isAnonymous altIds definition comment subsets synonyms xrefs isA
+        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider propertyValues builtIn
         createdBy creationDate = {
         Id              = id
         Name            = name
@@ -237,8 +237,14 @@ type OboTerm =
             CreationDate    = Option.defaultValue "" CreationDate
         }
 
+    /// Creates an OBO Term from its field values.
+    static member create id name isAnonymous altIds definition comment subsets synonyms xrefs isA
+        intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider propertyValues builtIn
+        createdBy creationDate =
+        OboTerm.Create(id, name, isAnonymous, altIds, definition, comment, subsets, synonyms, isA, intersectionOf, unionOf, disjointFrom, relationships, isObsolete, replacedby, consider, propertyValues, builtIn, createdBy, creationDate)
+
     /// Reads an OBO Term from lines in "key:value" style.
-    static member fromLines verbose (en:Collections.Generic.IEnumerator<string>) lineNumber 
+    static member fromLines verbose (en : Collections.Generic.IEnumerator<string>) lineNumber 
         id name isAnonymous altIds definition comment subsets synonyms xrefs isA 
         intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider 
         propertyValues builtIn createdBy creationDate =
