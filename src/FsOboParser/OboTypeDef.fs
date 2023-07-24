@@ -65,8 +65,8 @@ type OboTypeDef =
         // Cardinality: zero or one.
         Is_class_level : bool
     }
-        
-    /// Create an Obo Type Def from its field values
+
+    /// Creates an OBO Type Def from its field values.
     static member make id domain range name inverse_of transitive_over is_cyclic is_reflexive is_symmetric 
         is_anti_symmetric is_transitive is_metadata_tag is_class_level =
 
@@ -86,9 +86,9 @@ type OboTypeDef =
                 Is_class_level      = is_class_level
         }
 
-    /// Create an Obo Type Def from its field values
-    static member Create (id,domain,range,?Name,?Inverse_of,?Transitive_over,?Is_cyclic,?Is_reflexive,?Is_symmetric,
-        ?Is_anti_symmetric,?Is_transitive,?Is_metadata_tag,?Is_class_level) =
+    /// Creates an OBO Type Def from its field values.
+    static member Create (id, domain, range, ?Name, ?Inverse_of, ?Transitive_over, ?Is_cyclic, ?Is_reflexive, ?Is_symmetric,
+        ?Is_anti_symmetric, ?Is_transitive, ?Is_metadata_tag, ?Is_class_level) =
 
         {
                 Id                  = id
@@ -106,9 +106,9 @@ type OboTypeDef =
                 Is_class_level      = Option.defaultValue false Is_class_level
             }
 
-    /// Read an Obo Type Def from lines in "key:value" style
-    static member fromLines verbose (en:Collections.Generic.IEnumerator<string>) lineNumber 
-        id domain range name (inverse_of:string list) transitive_over is_cyclic is_reflexive is_symmetric 
+    /// Reads an OBO Type Def from lines in "key:value" style.
+    static member fromLines verbose (en : Collections.Generic.IEnumerator<string>) lineNumber 
+        id domain range name (inverse_of : string list) transitive_over is_cyclic is_reflexive is_symmetric 
         is_anti_symmetric is_transitive is_metadata_tag is_class_level =
 
         if en.MoveNext() then
@@ -210,7 +210,7 @@ type OboTypeDef =
                 is_anti_symmetric is_transitive is_metadata_tag is_class_level
             //failwithf "Unexcpected end of file."
 
-    /// Write an Obo Type Def to lines in "key:value" style
+    /// Writes an OBO Type Def to lines in "key:value" style.
     static member toLines (typedef : OboTypeDef) =
         seq {
             "id: " + typedef.Id

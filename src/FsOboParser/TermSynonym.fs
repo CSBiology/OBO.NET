@@ -17,7 +17,7 @@ type TermSynonymScope =
     | Narrow  
     | Related 
 
-    static member ofString (line:int) (s:string) = 
+    static member ofString (line : int) (s : string) = 
         match s with
         | "EXACT"   -> Exact
         | "BROAD"   -> Broad
@@ -51,7 +51,7 @@ module TermSynonym =
             TypeName = matches.Item("synonymDescription").Value
             DBXrefs =
                 let tmp = matches.Item("dbxreflist").Value
-                match tmp.Replace("[","").Replace("]","") with
+                match tmp.Replace("[", "").Replace("]", "") with
                 | "" -> []
                 | dbxrefs ->
                     dbxrefs.Split(',')

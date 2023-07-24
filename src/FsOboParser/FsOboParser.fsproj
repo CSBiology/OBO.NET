@@ -8,7 +8,6 @@
   <ItemGroup>
     <Compile Include="DBXref.fs" />
     <Compile Include="TermSynonym.fs" />
-    <Compile Include="test.fs" />
     <Compile Include="OboTerm.fs" />
     <Compile Include="OboTypeDef.fs" />
     <Compile Include="OboOntology.fs" />

@@ -183,9 +183,9 @@ type OboOntology =
             OntologyAnnotation.fromAnnotationId termId    
             |> this.GetEquivalentOntologyAnnotations
 
-    /// For a given ontology term, find all terms to which this term points in a "isA" relationship
+    /// For a given ontology term, finds all terms to which this term points in a "isA" relationship.
     ///
-    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked
+    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
     member this.GetParentOntologyAnnotations(term : ISADotNet.OntologyAnnotation, ?Depth) =
         let rec loop depth (equivalents : ISADotNet.OntologyAnnotation list) (lastLoop : ISADotNet.OntologyAnnotation list) =
             if equivalents.Length = lastLoop.Length then equivalents
@@ -213,7 +213,7 @@ type OboOntology =
 
     /// For a given ontology term, find all terms to which this term points in a "isA" relationship
     ///
-    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked
+    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
     member this.GetParentOntologyAnnotations(termId : string, ?Depth) =
         match Depth with 
         | Some d ->
@@ -223,9 +223,9 @@ type OboOntology =
             OntologyAnnotation.fromAnnotationId termId
             |> this.GetParentOntologyAnnotations
 
-    /// For a given ontology term, find all terms which point to this term "isA" relationship
+    /// For a given ontology term, finds all terms which point to this term "isA" relationship.
     ///
-    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked
+    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
     member this.GetChildOntologyAnnotations(term : ISADotNet.OntologyAnnotation, ?Depth) =
         let rec loop depth (equivalents : ISADotNet.OntologyAnnotation list) (lastLoop : ISADotNet.OntologyAnnotation list) =
             if equivalents.Length = lastLoop.Length then equivalents
@@ -250,9 +250,9 @@ type OboOntology =
         loop 1 [term] []
         |> List.filter ((<>) term)
 
-    /// For a given ontology term, find all terms which point to this term "isA" relationship
+    /// For a given ontology term, finds all terms which point to this term "isA" relationship.
     ///
-    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked
+    /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
     member this.GetChildOntologyAnnotations(termId : string, ?Depth) =
         match Depth with 
         | Some d ->
@@ -295,7 +295,7 @@ type OboTermDef =
 /// Functions for parsing and querying an OBO ontology.
 module OboOntology =
 
-    /// Parse Obo Terms [Term] from seq<string>
+    /// Parses OBO Terms [Term] from seq<string>.
     [<Obsolete("Use static method fromLines instead")>]
     let parseOboTerms verbose (input:seq<string>)  =
 
