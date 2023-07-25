@@ -6,7 +6,7 @@ let project = "FsOboParser"
 
 let testProjects = 
     [
-        // add relative paths (from project root) to your testprojects here
+        "tests/FsOboParser.Tests/FsOboParser.Tests.fsproj"
     ]
 
 let solutionFile  = $"{project}.sln"

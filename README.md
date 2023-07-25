@@ -14,7 +14,7 @@ let myOboOntology = OboOntology.fromFile true filepath
 
 ### Create OBO terms
 
-OOP style (adviced):
+OOP style (recommended):
 
 ```fsharp
 let myOboTerm = 
@@ -69,7 +69,7 @@ OboOntology.toFile "myOboOntology.obo" myOntology
 
 ### Build (QuickStart)
 
-If not already done, install .NET SDK.
+If not already done, install .NET SDK >= 6.
 
 In any shell, run `build.cmd <target>` where `<target>` may be
 - if `<target>` is empty, it just runs dotnet build after cleaning everything
