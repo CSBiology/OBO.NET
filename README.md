@@ -53,10 +53,16 @@ let myOboTerm =
 		None
 ```
 
-### Add OBO terms to an ontology
+### Create an OBO ontology
 
 ```fsharp
+let myOntology = OboOntology.create [myOboTerm] []
+```
 
+### Save an OBO ontology
+
+```fsharp
+OboOntology.toFile "myOboOntology.obo" myOntology
 ```
 
 ## Develop

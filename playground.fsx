@@ -48,4 +48,6 @@ let myOboTerm =
 
 OboTypeDef.Create
 
-OboOntology.create [myOboTerm] []
+let myOntology = OboOntology.create [myOboTerm] []
+
+OboOntology.toFile "myOboOntology.obo" myOntology
