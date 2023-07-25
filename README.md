@@ -53,6 +53,12 @@ let myOboTerm =
 		None
 ```
 
+### Add OBO terms to an ontology
+
+```fsharp
+
+```
+
 ## Develop
 
 ### Build (QuickStart)

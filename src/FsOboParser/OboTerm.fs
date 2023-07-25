@@ -212,7 +212,6 @@ type OboTerm =
     static member Create (id, ?Name, ?IsAnonymous, ?AltIds, ?Definition, ?Comment, ?Subsets, ?Synonyms, ?Xrefs, ?IsA,
         ?IntersectionOf, ?UnionOf, ?DisjointFrom, ?Relationships, ?IsObsolete, ?Replacedby, ?Consider, ?PropertyValues, ?BuiltIn,
         ?CreatedBy, ?CreationDate) =
-
         {
             Id              = id
             Name            = Option.defaultValue "" Name
@@ -241,7 +240,29 @@ type OboTerm =
     static member create id name isAnonymous altIds definition comment subsets synonyms xrefs isA
         intersectionOf unionOf disjointFrom relationships isObsolete replacedby consider propertyValues builtIn
         createdBy creationDate =
-        OboTerm.Create(id, name, isAnonymous, altIds, definition, comment, subsets, synonyms, isA, intersectionOf, unionOf, disjointFrom, relationships, isObsolete, replacedby, consider, propertyValues, builtIn, createdBy, creationDate)
+        {
+            Id              = id
+            Name            = Option.defaultValue "" name
+            IsAnonymous     = Option.defaultValue false isAnonymous 
+            AltIds          = Option.defaultValue [] altIds
+            Definition      = Option.defaultValue "" definition
+            Comment         = Option.defaultValue "" comment
+            Subsets         = Option.defaultValue [] subsets
+            Synonyms        = Option.defaultValue [] synonyms
+            Xrefs           = Option.defaultValue [] xrefs
+            IsA             = Option.defaultValue [] isA
+            IntersectionOf  = Option.defaultValue [] intersectionOf
+            UnionOf         = Option.defaultValue [] unionOf
+            DisjointFrom    = Option.defaultValue [] disjointFrom
+            Relationships   = Option.defaultValue [] relationships
+            IsObsolete      = Option.defaultValue false isObsolete
+            Replacedby      = Option.defaultValue [] replacedby
+            Consider        = Option.defaultValue [] consider
+            PropertyValues  = Option.defaultValue [] propertyValues
+            BuiltIn         = Option.defaultValue false builtIn
+            CreatedBy       = Option.defaultValue "" createdBy
+            CreationDate    = Option.defaultValue "" creationDate
+        }
 
     /// Reads an OBO Term from lines in "key:value" style.
     static member fromLines verbose (en : Collections.Generic.IEnumerator<string>) lineNumber 

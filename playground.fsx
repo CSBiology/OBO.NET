@@ -23,25 +23,26 @@ Path.Combine("myOboOntology.obo") |> FileInfo
 let myOboTerm = OboTerm.Create("TO:00000000", Name = "testTerm", CreatedBy = "myself")
 
 let myOboTerm = 
-	OboTerm.create 
-		"TO:00000000" 
-		(Some "testTerm") 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		None 
-		(Some "myself") 
-		None
+    OboTerm.create 
+        "TO:00000000" 
+        (Some "testTerm") 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        None 
+        (Some "myself") 
+        None
+
