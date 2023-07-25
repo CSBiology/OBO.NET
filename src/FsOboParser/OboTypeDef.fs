@@ -104,6 +104,24 @@ type OboTypeDef =
                 Is_class_level      = Option.defaultValue false Is_class_level
             }
 
+    /// Creates an OBO Type Def from its field values.
+    static member create id domain range name inverse_of transitive_over is_cyclic is_reflexive is_symmetric is_anti_symmetric is_transitive is_metadata_tag is_class_level =
+        {
+                Id                  = id
+                Domain              = domain
+                Range               = range
+                Name                = Option.defaultValue "" name
+                Inverse_of          = Option.defaultValue [] inverse_of
+                Transitive_over     = Option.defaultValue [] transitive_over
+                Is_cyclic           = Option.defaultValue false is_cyclic
+                Is_reflexive        = Option.defaultValue false is_reflexive
+                Is_symmetric        = Option.defaultValue false is_symmetric
+                Is_anti_symmetric   = Option.defaultValue false is_anti_symmetric
+                Is_transitive       = Option.defaultValue false is_transitive
+                Is_metadata_tag     = Option.defaultValue false is_metadata_tag
+                Is_class_level      = Option.defaultValue false is_class_level
+            }
+
     /// Reads an OBO Type Def from lines in "key:value" style.
     static member fromLines verbose (en : Collections.Generic.IEnumerator<string>) lineNumber 
         id domain range name (inverse_of : string list) transitive_over is_cyclic is_reflexive is_symmetric 

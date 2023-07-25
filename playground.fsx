@@ -46,3 +46,6 @@ let myOboTerm =
         (Some "myself") 
         None
 
+OboTypeDef.Create
+
+OboOntology.create [myOboTerm] []
