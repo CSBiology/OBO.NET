@@ -70,7 +70,11 @@ OboOntology.toFile "myOboOntology.obo" myOntology
 ```fsharp
 let termOfInterest = testOntology.Terms[5]
 
-testOntology.GetParentOntologyAnnotations(termOfInterest.Id)
+let isAs = testOntology.GetParentOntologyAnnotations(termOfInterest.Id)
+// output is an ISADotNet.OntologyAnnotation list
+
+let isAsTerms = isAs |> List.map (fun oa -> testOntology.GetTerm(oa.TermAccessionString.ToString()))
+// output is an OboTerm list
 ```
 
 ## Develop
