@@ -9,7 +9,7 @@ An OBO file format parser, written in F#.
 ```fsharp
 open FsOboParser
 
-let myOboOntology = OboOntology.fromFile true filepath
+let testOntology = OboOntology.fromFile true filepath
 ```
 
 ### Create OBO terms
@@ -63,6 +63,14 @@ let myOntology = OboOntology.create [myOboTerm] []
 
 ```fsharp
 OboOntology.toFile "myOboOntology.obo" myOntology
+```
+
+### Get all `is_a`s of a Term recursively
+
+```fsharp
+let termOfInterest = testOntology.Terms[5]
+
+testOntology.GetParentOntologyAnnotations(termOfInterest.Id)
 ```
 
 ## Develop
