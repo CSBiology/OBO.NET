@@ -17,6 +17,7 @@
     <Compile Include="TermSynonym.fs" />
     <Compile Include="OboTerm.fs" />
     <Compile Include="OboTypeDef.fs" />
+    <Compile Include="OboEntry.fs" />
     <Compile Include="OboOntology.fs" />
     <Compile Include="FastOboGraph.fs" />
   </ItemGroup>
@@ -35,7 +36,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="ISADotNet" Version="0.6.1" />
   </ItemGroup>
 
