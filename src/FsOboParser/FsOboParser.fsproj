@@ -18,6 +18,7 @@
     <Compile Include="OboTerm.fs" />
     <Compile Include="OboTypeDef.fs" />
     <Compile Include="OboEntry.fs" />
+    <Compile Include="OboEntries.fs" />
     <Compile Include="OboOntology.fs" />
     <Compile Include="FastOboGraph.fs" />
   </ItemGroup>

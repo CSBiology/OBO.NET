@@ -10,6 +10,7 @@ open System.IO
 
 let testPath = Path.Combine(__SOURCE_DIRECTORY__,  "./../../nfdi4plants/arc-validate/ErrorClassOntology.obo")
 
+OboEntries.fromFile true testPath
 let testOntology = OboOntology.fromFile true testPath
 
 let testTerms = [
