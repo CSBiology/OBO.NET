@@ -12,6 +12,19 @@ let testPath = Path.Combine(__SOURCE_DIRECTORY__,  "./../../nfdi4plants/arc-vali
 
 let testOntology = OboOntology.fromFile true testPath
 
+let testTerms = [
+    OboTerm.Create("test:000", Name = "test0")
+    OboTerm.Create("test:001", Name = "test1a", IsA = ["test:000"])
+    OboTerm.Create("test:002", Name = "test2", IsA = ["test:001"])
+    OboTerm.Create("test:003", Name = "test1b", IsA = ["test:000"])
+]
+
+let testOntology = OboOntology.create testTerms []
+
+testOntology.GetChildOntologyAnnotations(testTerms.Head.Id)
+testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 1)
+testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 2)
+
 //let fileLines = File.ReadAllLines testPath
 
 //OboTerm.fromLines true ((fileLines |> Seq.ofArray).GetEnumerator()) 0

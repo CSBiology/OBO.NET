@@ -9,6 +9,35 @@ open ISADotNet
 open System
 
 
+/// Functions for working with OboEntries.
+module OboEntries =
+
+    /// Reads a collection of strings and parses them into a list of OboEntries.
+    let fromLines verbose (input : seq<string>) =
+
+        let en = input.GetEnumerator()
+        let rec loop (en:System.Collections.Generic.IEnumerator<string>) entries lineNumber =
+
+            match en.MoveNext() with
+            | true ->
+                match (en.Current |> trimComment) with
+                | "[Term]" -> 
+                    let lineNumber, parsedTerm = (OboTerm.fromLines verbose en lineNumber "" "" false [] "" "" [] [] [] [] [] [] [] [] false [] [] [] false "" "")
+                    loop en (Term parsedTerm :: entries) lineNumber
+                | "[Typedef]" -> 
+                    let lineNumber, parsedTypeDef = (OboTypeDef.fromLines verbose en lineNumber "" "" "" "" [] [] false false false false false false false)
+                    loop en (TypeDef parsedTypeDef :: entries) lineNumber
+                | _ -> loop en entries (lineNumber + 1)
+            | false -> entries
+
+        loop en [] 1
+
+    /// Reads an OBO file and returns a list of OboEntries.
+    let fromFile verbose filepath =
+        IO.File.ReadAllLines filepath
+        |> fromLines verbose
+
+
 /// Ontology containing OBO Terms and OBO Type Defs (OBO 1.2).
 type OboOntology =
 
@@ -26,22 +55,19 @@ type OboOntology =
     /// Reads an OBO Ontology containing term and type def stanzas from lines.
     static member fromLines verbose (input : seq<string>) =
 
-        let en = input.GetEnumerator()
-        let rec loop (en:System.Collections.Generic.IEnumerator<string>) terms typedefs lineNumber =
+        let rec loop terms typedefs entries =
+            match entries with
+            | h :: t ->
+                match h with
+                | Term term         -> loop (term :: terms) typedefs t
+                | TypeDef typedef   -> loop terms (typedef :: typedefs) t
+            | [] -> terms, typedefs
 
-            match en.MoveNext() with
-            | true ->             
-                match (en.Current |> trimComment) with
-                | "[Term]"    -> 
-                    let lineNumber,parsedTerm = (OboTerm.fromLines verbose en lineNumber "" "" false [] "" "" [] [] [] [] [] [] [] [] false [] [] [] false "" "")
-                    loop en (parsedTerm :: terms) typedefs lineNumber
-                | "[Typedef]" -> 
-                    let lineNumber,parsedTypeDef = (OboTypeDef.fromLines verbose en lineNumber "" "" "" "" [] [] false false false false false false false)
-                    loop en terms (parsedTypeDef :: typedefs) lineNumber
-                | _ -> loop en terms typedefs (lineNumber + 1)
-            | false -> OboOntology.create (List.rev terms) (List.rev typedefs)
+        let terms,typedefs =
+            OboEntries.fromLines verbose input
+            |> loop [] []
 
-        loop en [] [] 1
+        OboOntology.create (List.rev terms) (List.rev typedefs)
 
     /// Reads an OBO Ontology containing term and type def stanzas from a file with the given path.
     static member fromFile verbose (path : string) =

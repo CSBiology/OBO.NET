@@ -5,7 +5,7 @@ open DBXref
 open System
 
 
-/// Models the relationship between OBO Terms 
+/// Models the relationship between OBO Terms.
 type OboTypeDef = 
     {
         ///The unique id of the current term. 
