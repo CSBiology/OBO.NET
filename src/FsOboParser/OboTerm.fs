@@ -1,11 +1,18 @@
 ﻿namespace FsOboParser
 
+
 open DBXref
 open TermSynonym
 
 open ISADotNet
 
 open System
+
+
+type IOboTerm =     // maybe better name: IOboBase or ITermBase or sth.
+    abstract member Id : string
+    abstract member Name : string
+    abstract member IsA : string list
 
 
 /// Models the entities in an OBO Ontology.
@@ -15,12 +22,12 @@ type OboTerm =
         ///The unique id of the current term. 
         //Cardinality: exactly one.
         Id : string 
-        
+
         ///The term name. 
         //Any term may have only zero or one name defined. 
         //Cardinality: zero or one - If multiple term names are defined, it is a parse error. In 1.2 name was required. This has been relaxed in 1.4. This helps with OWL interoperability, as labels are optional in OWL
         Name : string 
-        
+
         ///Whether or not the current object has an anonymous id. 
         //Cardinality: zero or one. The semantics are the same as B-Nodes in RDF.
         IsAnonymous: bool
@@ -28,12 +35,12 @@ type OboTerm =
         ///Defines an alternate id for this term. 
         //Cardinality: any. A term may have any number of alternate ids.
         AltIds : string list
-        
+
         ///The definition of the current term. 
         //Cardinality: zero or one. More than one definition for a term generates a parse error. The value of this tag should be the quote enclosed definition text, followed by a dbxref list containing dbxrefs that describe the origin of this definition (see dbxref formatting for information on how dbxref lists are encoded). An example of this tag would look like this:
         //definition: "The breakdown into simpler components of (+)-camphor, a bicyclic monoterpene ketone." [UM-BBD:pathway "", http://umbbd.ahc.umn.edu/cam/cam_map.html ""]
         Definition : string 
-        
+
         ///A comment for this term. 
         //Cardinality: zero or one. There must be zero or one instances of this tag per term description. More than one comment for a term generates a parse error.
         Comment : string
@@ -180,6 +187,11 @@ type OboTerm =
         CreationDate : string
 
     }
+
+    interface IOboTerm with
+        member this.Id = this.Id
+        member this.Name = this.Name
+        member this.IsA = this.IsA
 
     /// Creates an OBO Term from its field values.
     static member make id name isAnonymous altIds definition comment subsets synonyms xrefs isA
