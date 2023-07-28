@@ -8,16 +8,16 @@ module OboEntries =
     let fromLines verbose (input : seq<string>) =
 
         let en = input.GetEnumerator()
-        let rec loop (en:System.Collections.Generic.IEnumerator<string>) entries lineNumber =
+        let rec loop (en : System.Collections.Generic.IEnumerator<string>) entries lineNumber =
 
             match en.MoveNext() with
             | true ->
                 match (en.Current |> DBXref.trimComment) with
                 | "[Term]" -> 
-                    let lineNumber, parsedTerm = (OboTerm.fromLines verbose en lineNumber "" "" false [] "" "" [] [] [] [] [] [] [] [] false [] [] [] false "" "")
+                    let lineNumber, parsedTerm = OboTerm.fromLines verbose en lineNumber "" "" false [] "" "" [] [] [] [] [] [] [] [] false [] [] [] false "" ""
                     loop en (Term parsedTerm :: entries) lineNumber
                 | "[Typedef]" -> 
-                    let lineNumber, parsedTypeDef = (OboTypeDef.fromLines verbose en lineNumber "" "" "" "" [] [] false false false false false false false)
+                    let lineNumber, parsedTypeDef = OboTypeDef.fromLines verbose en lineNumber "" "" "" "" [] [] false false false false false false false
                     loop en (TypeDef parsedTypeDef :: entries) lineNumber
                 | _ -> loop en entries (lineNumber + 1)
             | false -> entries

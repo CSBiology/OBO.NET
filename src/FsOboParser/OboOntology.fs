@@ -26,19 +26,22 @@ type OboOntology =
     /// Reads an OBO Ontology containing term and type def stanzas from lines.
     static member fromLines verbose (input : seq<string>) =
 
-        let rec loop terms typedefs entries =
-            match entries with
-            | h :: t ->
-                match h with
-                | Term term         -> loop (term :: terms) typedefs t
-                | TypeDef typedef   -> loop terms (typedef :: typedefs) t
-            | [] -> terms, typedefs
+        let en = input.GetEnumerator()
+        let rec loop (en:System.Collections.Generic.IEnumerator<string>) terms typedefs lineNumber =
 
-        let terms,typedefs =
-            OboEntries.fromLines verbose input
-            |> loop [] []
+            match en.MoveNext() with
+            | true ->             
+                match (en.Current |> trimComment) with
+                | "[Term]"    -> 
+                    let lineNumber,parsedTerm = OboTerm.fromLines verbose en lineNumber "" "" false [] "" "" [] [] [] [] [] [] [] [] false [] [] [] false "" ""
+                    loop en (parsedTerm :: terms) typedefs lineNumber
+                | "[Typedef]" -> 
+                    let lineNumber,parsedTypeDef = OboTypeDef.fromLines verbose en lineNumber "" "" "" "" [] [] false false false false false false false
+                    loop en terms (parsedTypeDef :: typedefs) lineNumber
+                | _ -> loop en terms typedefs (lineNumber + 1)
+            | false -> OboOntology.create (List.rev terms) (List.rev typedefs)
 
-        OboOntology.create (List.rev terms) (List.rev typedefs)
+        loop en [] [] 1
 
     /// Reads an OBO Ontology containing term and type def stanzas from a file with the given path.
     static member fromFile verbose (path : string) =
