@@ -2,6 +2,7 @@
 #r "FsOboParser.dll"
 
 #r "nuget: IsaDotNet"
+//#r "nuget: FsOboParser"
 
 open FsOboParser
 
@@ -10,7 +11,7 @@ open System.IO
 
 let testPath = Path.Combine(__SOURCE_DIRECTORY__,  "./../../nfdi4plants/arc-validate/ErrorClassOntology.obo")
 
-OboEntries.fromFile true testPath
+//OboEntries.fromFile true testPath
 let testOntology = OboOntology.fromFile true testPath
 
 let testTerms = [
@@ -25,6 +26,13 @@ let testOntology = OboOntology.create testTerms []
 testOntology.GetChildOntologyAnnotations(testTerms.Head.Id)
 testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 1)
 testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 2)
+
+let performanceTerms = List.init 7000000 (fun i -> OboTerm.Create($"lol:{i}"))
+let performanceOboOntology = OboOntology.create performanceTerms []
+OboOntology.toFile @"C:\Repos\CSBiology\FsOboParser\performanceOntology.obo" performanceOboOntology
+
+let x = OboOntology.fromFile false @"C:\Repos\CSBiology\FsOboParser\performanceOntology.obo"
+
 
 //let fileLines = File.ReadAllLines testPath
 

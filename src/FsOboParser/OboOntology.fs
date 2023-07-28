@@ -45,6 +45,21 @@ type OboOntology =
         System.IO.File.ReadAllLines path
         |> OboOntology.fromLines verbose
 
+    /// Takes a list of OboEntries and returns the OboOntology based on it.
+    static member fromOboEntries entries =
+
+        let rec loop terms typedefs entries =
+            match entries with
+            | h :: t ->
+                match h with
+                | Term term         -> loop (term :: terms) typedefs t
+                | TypeDef typedef   -> loop terms (typedef :: typedefs) t
+            | [] -> terms, typedefs
+
+        let terms, typedefs = loop [] [] entries
+
+        OboOntology.create terms typedefs
+
     /// Writes an OBO Ontology to term and type def stanzas in line form.
     static member toLines (oboOntology : OboOntology) =
         seq {
