@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Compile Include="OboTerm.Tests.fs" />
+    <Compile Include="OboOntology.Tests.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 

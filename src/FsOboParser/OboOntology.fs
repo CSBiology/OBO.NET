@@ -277,6 +277,23 @@ type OboOntology =
             OntologyAnnotation.fromAnnotationId termId
             |> this.GetChildOntologyAnnotations
 
+    /// Takes an OboTerm and returns all related terms in this ontology as a triple of input term, relationship, and related term.
+    member this.GetRelatedTerms(term : OboTerm) =
+        term.Relationships
+        |> List.map (
+            OboTerm.deconstructRelationship
+            >> fun (r,tId) -> 
+                term, 
+                r, 
+                this.Terms
+                |> List.tryFind (
+                    fun t -> t.Id = tId
+                )
+        )
+
+    /// Takes an OboTerm and an OboOntology and returns all related terms in this ontology as a triple of input term, relationship, and related term.
+    static member getRelatedTerms term (ontology : OboOntology) =
+        ontology.GetRelatedTerms term
 
 
 

@@ -529,7 +529,7 @@ type OboTerm =
         regexMatch.Groups["relName"].Value, regexMatch.Groups["id"].Value
 
     /// Returns the OboTerm's relationships as a triple consisting of the term's ID, the name of the relationship, and the related term's ID.
-    member this.GetRelatedTerms() =
+    member this.GetRelatedTermIds() =
         this.Relationships
         |> List.map (
             OboTerm.deconstructRelationship
@@ -537,5 +537,5 @@ type OboTerm =
         )
 
     /// Takes an OboTerm and returns its relationships as a triple consisting of the input term's ID, the name of the relationship, and the related term's ID.
-    static member getRelatedTerms (term : OboTerm) =
-        term.GetRelatedTerms()
+    static member getRelatedTermIds (term : OboTerm) =
+        term.GetRelatedTermIds()
