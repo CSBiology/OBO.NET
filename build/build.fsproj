@@ -28,7 +28,7 @@
     <PackageReference Include="Fake.DotNet.MSBuild" Version="5.23.1" />
     <PackageReference Include="Fake.IO.FileSystem" Version="5.23.1" />
     <PackageReference Include="Fake.Tools.Git" Version="5.23.1" />
-    <PackageReference Include="Fake.Extensions.Release" Version="0.3.1" />
+    <PackageReference Include="Fake.Extensions.Release" Version="[0.4.0]" />
   </ItemGroup>
 
 </Project>
