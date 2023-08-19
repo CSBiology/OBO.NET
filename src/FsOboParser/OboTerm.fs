@@ -521,3 +521,21 @@ type OboTerm =
     /// Translates an ISADotNet `OntologyAnnotation` into an OBO `term`.
     static member ofOntologyAnnotation (term : OntologyAnnotation) =
         OboTerm.Create(term.ShortAnnotationString,term.NameText)
+
+    /// Takes a relationship and returns a tuple consisting of the name of the relationship and the ID of the OboTerm it matches.
+    static member deconstructRelationship relationship =
+        let pattern = System.Text.RegularExpressions.Regex @"^(?<relName>.+) (?<id>.+:\d+)$"
+        let regexMatch = pattern.Match relationship
+        regexMatch.Groups["relName"].Value, regexMatch.Groups["id"].Value
+
+    /// Returns the OboTerm's relationships as a triple consisting of the term's ID, the name of the relationship, and the related term's ID.
+    member this.GetRelatedTermIds() =
+        this.Relationships
+        |> List.map (
+            OboTerm.deconstructRelationship
+            >> fun (r,tId) -> this.Id, r, tId
+        )
+
+    /// Takes an OboTerm and returns its relationships as a triple consisting of the input term's ID, the name of the relationship, and the related term's ID.
+    static member getRelatedTermIds (term : OboTerm) =
+        term.GetRelatedTermIds()

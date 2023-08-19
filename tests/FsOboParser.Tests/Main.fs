@@ -1,5 +1,7 @@
+open FsOboParser.Tests
+
 open Expecto
 
 
 [<EntryPoint>]
-let main argv = Tests.runTestsWithCLIArgs [] argv FsOboParser.Tests.TestTests.testTest
+let main argv = Tests.runTestsInAssemblyWithCLIArgs [] argv
