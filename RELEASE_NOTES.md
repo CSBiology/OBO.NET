@@ -1,3 +1,11 @@
+### 0.3.0+da71d21 (Released 2023-8-21)
+* Additions:
+    * [[#3a8ac9a](https://github.com/CSBiology/FsOboParser/commit/3a8ac9abbc5a2923fa4f278b6168eb7ccf3dcbee)] Add unit tests for getting `is_a`s & TermRelations
+    * [[#a870ef3](https://github.com/CSBiology/FsOboParser/commit/a870ef30cac09b59615f3a6a846ac70063a859e1)] Add functions to get TermRelations and `is_a`s
+    * [[#45fb8b5](https://github.com/CSBiology/FsOboParser/commit/45fb8b51aff7ceb64a3c5195a1eac8e1267c96f1)] Add TermRelation type
+    * [[#b8acba0](https://github.com/CSBiology/FsOboParser/commit/b8acba095848dfe9fdbed8a923399334a1afc8f7)] Revert "Update Fake.Extensions dependency @ build proj"
+    * [[#161a053](https://github.com/CSBiology/FsOboParser/commit/161a053c7b93952d95c4b3abe6bb9419a444a1d0)] Update Fake.Extensions dependency @ build proj
+
 ### 0.2.0+afd7c0a (Released 2023-8-19)
 * Additions:
     * [[#dc6fd13](https://github.com/CSBiology/FsOboParser/commit/dc6fd1353d84ff8c72fde5bb41dc126a70c5fb8e)] various repo structure improvements
