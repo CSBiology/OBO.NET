@@ -295,6 +295,47 @@ type OboOntology =
     static member getRelatedTerms term (ontology : OboOntology) =
         ontology.GetRelatedTerms term
 
+    /// Takes an OboTerm and returns a list of the input OboTerm and all OboTerms that this OboTerm is related with via is_a.
+    member this.GetIsAs(term : OboTerm) =
+        term.IsA
+        |> List.map (
+            fun id ->
+                term,
+                this.Terms
+                |> List.tryFind (fun t -> t.Id = id)
+        )
+
+    /// Takes an OboTerm and an OboOntology and returns a list of the input OboTerm and all OboTerms that this OboTerm is related with via is_a.
+    static member getIsAs term (ontology: OboOntology) =
+        ontology.GetIsAs term
+
+    /// Returns all relations in this OboOntology as a list of TermRelations.
+    member this.GetRelations() =
+        [for t in this.Terms do
+            match List.isEmpty t.Relationships && List.isEmpty t.IsA with
+            | true -> Empty t
+            | false ->
+                yield! 
+                    this.GetRelatedTerms t
+                    |> List.map (
+                        fun (st,rs,tto) -> 
+                            match tto with
+                            | Some tt -> Target (rs, st, tt)
+                            | None -> TargetMissing (rs, st)
+                    )
+                yield!
+                    this.GetIsAs t
+                    |> List.map (
+                        fun (st,tto) ->
+                            match tto with
+                            | Some tt -> Target ("is_a", st, tt)
+                            | None -> TargetMissing ("is_a", st)
+                    )
+        ]
+
+    /// Returns all relations in the given OboOntology as a list of TermRelations.
+    static member getRelations (ontology : OboOntology) =
+        ontology.GetRelations()
 
 
 type OboTermDef = 
@@ -318,7 +359,6 @@ type OboTermDef =
             | "is_transitive" -> OboTermDef.fromLines en id name (split.[1..] |> String.concat ": ") isCyclic
             | "is_cyclic"     -> OboTermDef.fromLines en id name isTransitive (split.[1..] |> String.concat ": ")
             | ""              -> OboTermDef.make id name isTransitive isCyclic
-                  
             | _               -> OboTermDef.fromLines en id name isTransitive isCyclic
         else
             // Maybe check if id is empty

@@ -539,3 +539,13 @@ type OboTerm =
     /// Takes an OboTerm and returns its relationships as a triple consisting of the input term's ID, the name of the relationship, and the related term's ID.
     static member getRelatedTermIds (term : OboTerm) =
         term.GetRelatedTermIds()
+
+
+/// Representation of a the relation an OboTerm can have with other OboTerms.
+type TermRelation<'a> =
+    /// No Relation with other OboTerms.
+    | Empty of SourceTerm : OboTerm
+    /// Relation between one OboTerm with another in the form of generic relation `'a` * source OboTerm * target OboTerm.
+    | Target of Relation :'a * SourceTerm : OboTerm * TargetTerm : OboTerm
+    /// Relation between one OboTerm with another OboTerm that is not defined in the OboOntology in the form of generic relation `'a` * source OboTerm.
+    | TargetMissing of Relation :'a * SourceTerm : OboTerm
