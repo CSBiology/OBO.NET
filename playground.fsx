@@ -4,6 +4,7 @@
 #r "nuget: IsaDotNet"
 //#r "nuget: FsOboParser"
 
+
 open FsOboParser
 
 open System.IO
@@ -19,6 +20,7 @@ let testTerms = [
     OboTerm.Create("test:001", Name = "test1a", IsA = ["test:000"])
     OboTerm.Create("test:002", Name = "test2", IsA = ["test:001"; "test:000"])
     OboTerm.Create("test:003", Name = "test1b", IsA = ["test:000"])
+    OboTerm.Create("test:004", Name = "test1aSyn", Synonyms = [TermSynonym.parseSynonym None ])
 ]
 
 let testOntology = OboOntology.create testTerms []

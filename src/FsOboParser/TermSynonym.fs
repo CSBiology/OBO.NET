@@ -1,5 +1,6 @@
 ﻿namespace FsOboParser
 
+
 open DBXref
 
 
@@ -26,6 +27,7 @@ type TermSynonymScope =
         | _         ->  printfn "[WARNING@L %i]unable to recognize %s as synonym scope" line s
                         Related
 
+
 type TermSynonym = {
     Text        : string
     Scope       : TermSynonymScope
@@ -39,14 +41,14 @@ module TermSynonym =
     let private synonymRegex = 
         System.Text.RegularExpressions.Regex("""(?<synonymText>^\"(.*?)\"){1}(\s?)(?<synonymScope>(EXACT|BROAD|NARROW|RELATED))?(\s?)(?<synonymDescription>\w*)(\s?)(?<dbxreflist>\[(.*?)\])?""")
 
-    let parseSynonym (scopeFromDeprecatedTag:TermSynonymScope option) (line:int) (v:string) =
+    let parseSynonym (scopeFromDeprecatedTag : TermSynonymScope option) (line : int) (v : string) =
         let matches = synonymRegex.Match(v.Trim()).Groups
         {
             Text = matches.Item("synonymText").Value
             Scope =
                 match scopeFromDeprecatedTag with
-                |Some scope -> scope
-                |_ ->   matches.Item("synonymScope").Value
+                | Some scope -> scope
+                | _ ->  matches.Item("synonymScope").Value
                         |> TermSynonymScope.ofString line
             TypeName = matches.Item("synonymDescription").Value
             DBXrefs =

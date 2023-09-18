@@ -1,14 +1,18 @@
 ﻿namespace FsOboParser
 
+
 open System
 
 
+/// Representation of dbxrefs.
 type DBXref = {
         Name        : string
         Description : string
         Modifiers   : string
     }
 
+
+/// Functions for working with DBXrefs.
 module DBXref =
 
     //Dbxref definitions take the following form:
