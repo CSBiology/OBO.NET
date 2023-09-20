@@ -4,6 +4,7 @@ open DBXref
 //open OboTerm
 //open OboTypeDef
 
+open FSharpAux
 open ISADotNet
 
 open System
@@ -336,6 +337,43 @@ type OboOntology =
     /// Returns all relations in the given OboOntology as a list of TermRelations.
     static member getRelations (ontology : OboOntology) =
         ontology.GetRelations()
+
+    /// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the OboOntology or scope * None if it does not.
+    member this.TryGetSynonyms(term : OboTerm) =
+        term.Synonyms
+        |> Seq.map (
+            fun s -> 
+                s.Scope,
+                this.Terms 
+                |> Seq.tryFind (
+                    fun t -> 
+                        t.Name = String.replace "\"" "" s.Text
+                )
+        )
+
+    /// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the given OboOntology or scope * None if it does not.
+    static member tryGetSynonymTerms term (onto : OboOntology) =
+        onto.TryGetSynonyms term
+
+    /// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the OboOntology.
+    member this.GetSynonyms(term : OboTerm) =
+        term.Synonyms
+        |> Seq.choose (
+            fun s -> 
+                let sto =
+                    this.Terms 
+                    |> Seq.tryFind (
+                        fun t -> 
+                            t.Name = String.replace "\"" "" s.Text
+                    )
+                match sto with
+                | Some st -> Some (s.Scope, st)
+                | None -> None
+        )
+
+    /// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the given OboOntology.
+    static member getSynonyms term (onto : OboOntology) =
+        onto.GetSynonyms term
 
 
 type OboTermDef = 
