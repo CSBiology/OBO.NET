@@ -33,7 +33,13 @@ module OboOntologyTests =
                     "id:5",
                     Name = "testTerm4"
                 )
-            let testOntology = OboOntology.create [testTerm1; testTerm2; testTerm3; testTerm4] []
+            let testTerm5 =
+                OboTerm.Create(
+                    "id:6",
+                    Name = "testTerm5",
+                    Synonyms = [TermSynonym.parseSynonym None 0 "\"testTerm1\" EXACT []"; TermSynonym.parseSynonym None 1 "\"testTerm2\" BROAD []"; TermSynonym.parseSynonym None 2 "\"testTerm0\" NARROW []"]
+                )
+            let testOntology = OboOntology.create [testTerm1; testTerm2; testTerm3; testTerm4; testTerm5] []
             testList "GetRelatedTerms" [
                 testCase "returns correct related terms" <| fun _ ->
                     let actual = testOntology.GetRelatedTerms(testTerm1)
@@ -58,7 +64,20 @@ module OboOntologyTests =
                         Target ("is_a", testTerm3, testTerm1)
                         Target ("is_a", testTerm3, testTerm2)
                         Empty testTerm4
+                        Empty testTerm5
                     ]
+                    Expect.sequenceEqual actual expected "is not equal"
+            ]
+            testList "GetSynonyms" [
+                testCase "returns correct synonymous terms" <| fun _ ->
+                    let actual = testOntology.GetSynonyms testTerm5
+                    let expected = seq {Exact, testTerm1; Broad, testTerm2}
+                    Expect.sequenceEqual actual expected "is not equal"
+            ]
+            testList "TryGetSynonyms" [
+                testCase "returns correct synonymous terms" <| fun _ ->
+                    let actual = testOntology.TryGetSynonyms testTerm5
+                    let expected = seq {Exact, Some testTerm1; Broad, Some testTerm2; Narrow, None}
                     Expect.sequenceEqual actual expected "is not equal"
             ]
         ]
