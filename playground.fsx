@@ -1,4 +1,5 @@
 #I "src/FsOboParser/bin/Debug/netstandard2.0"
+#I "src/FsOboParser/bin/Release/netstandard2.0"
 #r "FsOboParser.dll"
 
 #r "nuget: IsaDotNet"
@@ -24,6 +25,7 @@ let testTerms = [
     OboTerm.Create("test:002", Name = "test2", IsA = ["test:001"; "test:000"])
     OboTerm.Create("test:003", Name = "test1b", IsA = ["test:000"])
     OboTerm.Create("test:004", Name = "test1aSyn", Synonyms = [TermSynonym.parseSynonym None 1 "\"test1a\" EXACT []"])
+    //OboTerm.Create("test:004", Name = "test1aSyn", Synonyms = [TermSynonym.parseSynonym None 1 "test1a EXACT []"])
 ]
 
 let testOntology = OboOntology.create testTerms []
@@ -58,6 +60,8 @@ let getSynonymTerms (term : OboTerm) (onto : OboOntology) =
             | Some st -> Some (s.Scope, st)
             | None -> None
     )
+
+String.replace "\"" "" (TermSynonym.parseSynonym None 1 "test1a EXACT []").Text
 
 tryGetSynonymTerms testTerms[4] testOntology
 getSynonymTerms testTerms[4] testOntology
