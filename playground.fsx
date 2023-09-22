@@ -32,55 +32,74 @@ let testOntology = OboOntology.create testTerms []
 
 
 
-/// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the given OboOntology or scope * None if it does not.
-let tryGetSynonymTerms (term : OboTerm) (onto : OboOntology) =
-    term.Synonyms
-    |> Seq.map (
-        fun s -> 
-            s.Scope,
-            onto.Terms 
-            |> Seq.tryFind (
-                fun t -> 
-                    t.Name = String.replace "\"" "" s.Text
-            )
-    )
+//let termOfInterest = testOntology.Terms[5]
+//let targetOfInterest = testOntology.Terms[7]
 
-/// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the given OboOntology.
-let getSynonymTerms (term : OboTerm) (onto : OboOntology) =
-    term.Synonyms
-    |> Seq.choose (
-        fun s -> 
-            let sto =
-                onto.Terms 
-                |> Seq.tryFind (
-                    fun t -> 
-                        t.Name = String.replace "\"" "" s.Text
-                )
-            match sto with
-            | Some st -> Some (s.Scope, st)
-            | None -> None
-    )
+//let emptyTermRelation = Empty termOfInterest
+//let targetMissingTermRelation = TargetMissing ("unconnected_to", termOfInterest)
+//let targetTermRelation = Target ("connected_to", termOfInterest, targetOfInterest)
 
-String.replace "\"" "" (TermSynonym.parseSynonym None 1 "test1a EXACT []").Text
+//// exemplary
+//type MyRelation =
+//    | IsA
+//    | HasA
+//    | PartOf
+//    | ConnectedTo
+//    | Unknown of string
 
-tryGetSynonymTerms testTerms[4] testOntology
-getSynonymTerms testTerms[4] testOntology
-
-
-OboOntology.getRelations testOntology
-
-
-testOntology.GetChildOntologyAnnotations(testTerms.Head.Id)
-testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 1)
-testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 2)
+//let targetTermRelation' = Target (ConnectedTo, termOfInterest, targetOfInterest)
 
 
 
-let performanceTerms = List.init 7000000 (fun i -> OboTerm.Create($"lol:{i}"))
-let performanceOboOntology = OboOntology.create performanceTerms []
-OboOntology.toFile @"C:\Repos\CSBiology\FsOboParser\performanceOntology.obo" performanceOboOntology
+///// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the given OboOntology or scope * None if it does not.
+//let tryGetSynonymTerms (term : OboTerm) (onto : OboOntology) =
+//    term.Synonyms
+//    |> Seq.map (
+//        fun s -> 
+//            s.Scope,
+//            onto.Terms 
+//            |> Seq.tryFind (
+//                fun t -> 
+//                    t.Name = String.replace "\"" "" s.Text
+//            )
+//    )
 
-let x = OboOntology.fromFile false @"C:\Repos\CSBiology\FsOboParser\performanceOntology.obo"
+///// Takes a given OboTerm and returns a sequence of scope * OboTerm if the synonym exists in the given OboOntology.
+//let getSynonymTerms (term : OboTerm) (onto : OboOntology) =
+//    term.Synonyms
+//    |> Seq.choose (
+//        fun s -> 
+//            let sto =
+//                onto.Terms 
+//                |> Seq.tryFind (
+//                    fun t -> 
+//                        t.Name = String.replace "\"" "" s.Text
+//                )
+//            match sto with
+//            | Some st -> Some (s.Scope, st)
+//            | None -> None
+//    )
+
+//String.replace "\"" "" (TermSynonym.parseSynonym None 1 "test1a EXACT []").Text
+
+//tryGetSynonymTerms testTerms[4] testOntology
+//getSynonymTerms testTerms[4] testOntology
+
+
+//OboOntology.getRelations testOntology
+
+
+//testOntology.GetChildOntologyAnnotations(testTerms.Head.Id)
+//testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 1)
+//testOntology.GetChildOntologyAnnotations(testTerms.Head.Id, Depth = 2)
+
+
+
+//let performanceTerms = List.init 7000000 (fun i -> OboTerm.Create($"lol:{i}"))
+//let performanceOboOntology = OboOntology.create performanceTerms []
+//OboOntology.toFile @"C:\Repos\CSBiology\FsOboParser\performanceOntology.obo" performanceOboOntology
+
+//let x = OboOntology.fromFile false @"C:\Repos\CSBiology\FsOboParser\performanceOntology.obo"
 
 
 //let fileLines = File.ReadAllLines testPath
@@ -91,7 +110,7 @@ let x = OboOntology.fromFile false @"C:\Repos\CSBiology\FsOboParser\performanceO
 
 //Path.Combine("myOboOntology.obo") |> FileInfo
 
-let myOboTerm = OboTerm.Create("TO:00000000", Name = "testTerm", CreatedBy = "myself")
+//let myOboTerm = OboTerm.Create("TO:00000000", Name = "testTerm", CreatedBy = "myself")
 
 //let myOboTerm = 
 //    OboTerm.create 
@@ -119,14 +138,14 @@ let myOboTerm = OboTerm.Create("TO:00000000", Name = "testTerm", CreatedBy = "my
 
 //OboTypeDef.Create
 
-let myOntology = OboOntology.create [myOboTerm] []
+//let myOntology = OboOntology.create [myOboTerm] []
 
 //OboOntology.toFile "myOboOntology.obo" myOntology
 
-let termOfInterest = testOntology.Terms[5]
+//let termOfInterest = testOntology.Terms[5]
 
-let isAs = testOntology.GetParentOntologyAnnotations(termOfInterest.Id)
+//let isAs = testOntology.GetParentOntologyAnnotations(termOfInterest.Id)
 // output is an ISADotNet.OntologyAnnotation list
 
-let isAsTerms = isAs |> List.map (fun oa -> testOntology.GetTerm(oa.TermAccessionString.ToString()))
+//let isAsTerms = isAs |> List.map (fun oa -> testOntology.GetTerm(oa.TermAccessionString.ToString()))
 // output is an OboTerm list

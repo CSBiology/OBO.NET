@@ -4,7 +4,9 @@ An OBO file format parser, written in F#.
 
 ## Usage
 
-### Read an OBO file
+### Basics
+
+#### Read an OBO file
 
 ```fsharp
 open FsOboParser
@@ -12,7 +14,7 @@ open FsOboParser
 let testOntology = OboOntology.fromFile true filepath
 ```
 
-### Create OBO terms
+#### Create OBO terms
 
 OOP style (recommended):
 
@@ -53,19 +55,28 @@ let myOboTerm =
 		None
 ```
 
-### Create an OBO ontology
+#### Create an OBO ontology
 
 ```fsharp
 let myOntology = OboOntology.create [myOboTerm] []
 ```
 
-### Save an OBO ontology
+#### Save an OBO ontology
 
 ```fsharp
 OboOntology.toFile "myOboOntology.obo" myOntology
 ```
 
-### Get all `is_a`s of a Term recursively
+#### Get all `is_a`s of a Term
+
+```fsharp
+let termOfInterest = testOntology.Terms[5]
+
+let isAs = OboOntology.getIsAs termOfInterest testOntology
+// output is a list of (input OboTerm * is_a OboTerm (if it exists in the given OboOntology))
+```
+
+#### Get all `is_a`s of a Term recursively
 
 ```fsharp
 let termOfInterest = testOntology.Terms[5]
@@ -75,6 +86,62 @@ let isAs = testOntology.GetParentOntologyAnnotations(termOfInterest.Id)
 
 let isAsTerms = isAs |> List.map (fun oa -> testOntology.GetTerm(oa.TermAccessionString.ToString()))
 // output is an OboTerm list
+```
+
+#### Get all related Terms of a Term
+
+```fsharp
+let termOfInterest = testOntology.Terms[5]
+
+let relatedTerms = OboOntology.getRelatedTerms termOfInterest testOntology
+// output is a list of (input OboTerm * relation as string * related OboTerm (if it exists in the given OboOntology))
+```
+
+#### Get all synonym Terms of a Term
+
+```fsharp
+let termOfInterest = testOntology.Terms[5]
+
+let synonyms = OboOntology.tryGetSynonyms termOfInterest testOntology
+// output is a seq of (TermSynonymScope * synonymous OboTerm (if it exists in the given OboOntology))
+```
+
+### Working with TermRelations
+
+TermRelations are abstractions of all relations that an OboTerm can have with another one. Such TermRelations can be
+- `Empty of SourceTerm` (if there is no TermRelation between a SourceTerm and a TargetTerm),
+- `TargetMissing of Relation * SourceTerm` (if there is a TermRelation between a SourceTerm and a TargetTerm but the TargetTerm is missing), 
+- and `Target of Relation * SourceTerm * TargetTerm`.
+Relation is of generic type `'a` and can therefore be of any type that you prefer (e.g. `string` or a custom-made Record or Union).
+
+### Create a TermRelation
+
+```fsharp
+let termOfInterest = testOntology.Terms[5]
+let targetOfInterest = testOntology.Terms[7]
+
+let emptyTermRelation = Empty termOfInterest
+let targetMissingTermRelation = TargetMissing ("unconnected_to", termOfInterest)
+let targetTermRelation = Target ("connected_to", termOfInterest, targetOfInterest)
+
+// exemplary
+type MyRelation =
+	| IsA
+	| HasA
+	| PartOf
+	| ConnectedTo
+	| Unknown of string
+
+let targetTermRelation' = Target (ConnectedTo, termOfInterest, targetOfInterest)
+```
+
+#### Get all TermRelations of a Term
+
+```fsharp
+let termOfInterest = testOntology.Terms[5]
+
+let relations = OboOntology.getRelations termOfInterest testOntology
+// output is a list of TermRelations<string> (includes all relationships and is_as)
 ```
 
 ## Develop
