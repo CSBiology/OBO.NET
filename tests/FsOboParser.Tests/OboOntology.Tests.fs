@@ -71,13 +71,13 @@ module OboOntologyTests =
             testList "GetSynonyms" [
                 testCase "returns correct synonymous terms" <| fun _ ->
                     let actual = testOntology.GetSynonyms testTerm5
-                    let expected = seq {Exact, testTerm1; Broad, testTerm2}
+                    let expected = seq {Exact, testTerm5, testTerm1; Broad, testTerm5, testTerm2}
                     Expect.sequenceEqual actual expected "is not equal"
             ]
             testList "TryGetSynonyms" [
                 testCase "returns correct synonymous terms" <| fun _ ->
                     let actual = testOntology.TryGetSynonyms testTerm5
-                    let expected = seq {Exact, Some testTerm1; Broad, Some testTerm2; Narrow, None}
+                    let expected = seq {Exact, testTerm5, Some testTerm1; Broad, testTerm5, Some testTerm2; Narrow, testTerm5, None}
                     Expect.sequenceEqual actual expected "is not equal"
             ]
         ]

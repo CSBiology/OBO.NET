@@ -344,6 +344,7 @@ type OboOntology =
         |> Seq.map (
             fun s -> 
                 s.Scope,
+                term,
                 this.Terms 
                 |> Seq.tryFind (
                     fun t -> 
@@ -367,7 +368,7 @@ type OboOntology =
                             t.Name = String.replace "\"" "" s.Text
                     )
                 match sto with
-                | Some st -> Some (s.Scope, st)
+                | Some st -> Some (s.Scope, term, st)
                 | None -> None
         )
 
