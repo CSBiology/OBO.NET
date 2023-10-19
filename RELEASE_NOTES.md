@@ -1,3 +1,20 @@
+### 0.4.0+d2b66f4 (Released 2023-10-19)
+* Additions:
+    * [[#226c3eb](https://github.com/CSBiology/OBO.NET/commit/226c3eb371b537d8799d3c44a01f9e064062ceda)] Investigate current synonym functionalities
+    * [[#5c666c3](https://github.com/CSBiology/OBO.NET/commit/5c666c3351513d04d29e2f26ff825a9d57bcce59)] Pinpoint current dependencies for safety reasons
+    * [[#d1db10e](https://github.com/CSBiology/OBO.NET/commit/d1db10e26d3fc2be337ae702e3f8b733ffad5ca2)] Add F#Aux dependency
+    * [[#3aec348](https://github.com/CSBiology/OBO.NET/commit/3aec348e202af19fd13cdb2d54300d8317298bd0)] Add functions to get synonyms (WIP)
+    * [[#812320a](https://github.com/CSBiology/OBO.NET/commit/812320abe806f91b3282893a508a2f0b51f0ad55)] Add synonym unit tests
+    * [[#b7e80c1](https://github.com/CSBiology/OBO.NET/commit/b7e80c1514e9294541b08704a07b8c6e13dddd6c)] Add unit tests for try synonyms
+    * [[#d02c71e](https://github.com/CSBiology/OBO.NET/commit/d02c71efe549e1913ad9cf232ebf4dc06ee30e70)] Pimp README docu
+    * [[#ba1ebc0](https://github.com/CSBiology/OBO.NET/commit/ba1ebc09b2b34679e2a7ee4be2c82469ac3348c0)] Change output type of synonym function
+    * [[#04ad89c](https://github.com/CSBiology/OBO.NET/commit/04ad89c38efd39ef5ee65a30ea7d3eaa8a212b6a)] Rename into OBO.NET
+    * [[#6748ae0](https://github.com/CSBiology/OBO.NET/commit/6748ae0a14647ad5d787f9d86be9b4bec69dba10)] Rename projects in build project info
+    * [[#b93d13f](https://github.com/CSBiology/OBO.NET/commit/b93d13f6e9234f7c207a4d269058ab218a59d8fd)] Rename folder
+    * [[#a1a02da](https://github.com/CSBiology/OBO.NET/commit/a1a02da3b38bce844a6bd3a89fa4ed189929a5ab)] Change folder name
+    * [[#2506508](https://github.com/CSBiology/OBO.NET/commit/2506508760c163f4baaf4de5c0212e2a15193ea6)] Change folder dir in sln file
+    * [[#fc65bc7](https://github.com/CSBiology/OBO.NET/commit/fc65bc7816588c84ac739000be63f13c98706385)] Change folder dir in tests project file
+
 ### 0.3.0+da71d21 (Released 2023-8-21)
 * Additions:
     * [[#3a8ac9a](https://github.com/CSBiology/FsOboParser/commit/3a8ac9abbc5a2923fa4f278b6168eb7ccf3dcbee)] Add unit tests for getting `is_a`s & TermRelations
