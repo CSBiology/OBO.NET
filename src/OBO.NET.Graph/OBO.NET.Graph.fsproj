@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OBO.NET\OBO.NET.fsproj" />
     <PackageReference Include="Graphoscope" Version="[0.2.0]" />
+    <PackageReference Include="Cytoscape.NET" Version="[0.2.0]" />
   </ItemGroup>
 
 </Project>
