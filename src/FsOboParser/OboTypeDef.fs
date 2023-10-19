@@ -1,4 +1,4 @@
-﻿namespace FsOboParser
+﻿namespace OBO.NET
 
 open DBXref
 
