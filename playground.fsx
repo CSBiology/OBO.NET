@@ -102,7 +102,7 @@ CodeGeneration.toFile "InvestigationMetadata" InvestigationMetadata.ontology @"C
 #r "nuget: FSharpAux"
 
 
-open FsOboParser
+open OBO.NET
 
 open FSharpAux
 

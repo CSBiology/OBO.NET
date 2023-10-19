@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{13CB
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		global.json = global.json
+		graphPlayground.fsx = graphPlayground.fsx
 		LICENSE = LICENSE
 		playground.fsx = playground.fsx
 		README.md = README.md

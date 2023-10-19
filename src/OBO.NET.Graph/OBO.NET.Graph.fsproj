@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <Compile Include="Graph.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OBO.NET\OBO.NET.fsproj" />
+    <PackageReference Include="Graphoscope" Version="[0.2.0]" />
   </ItemGroup>
 
 </Project>
