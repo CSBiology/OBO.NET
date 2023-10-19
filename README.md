@@ -1,4 +1,4 @@
-# FsOboParser
+# OBO.NET
 
 An OBO file format parser, written in F#.
 
@@ -9,7 +9,7 @@ An OBO file format parser, written in F#.
 #### Read an OBO file
 
 ```fsharp
-open FsOboParser
+open OBO.NET
 
 let testOntology = OboOntology.fromFile true filepath
 ```
