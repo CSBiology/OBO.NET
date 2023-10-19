@@ -20,15 +20,21 @@ open Cytoscape.NET
 
 let oboPath = @"C:\Repos\nfdi4plants\ARCTokenization\src\ARCTokenization\structural_ontologies\investigation_metadata_structural_ontology.obo"
 let obo = OboOntology.fromFile false oboPath
-let onto = ontologyToFGraph obo
+let onto = ontologyToFGraph true obo
 
-printGraph (fun (t : OboTerm) -> t.Name) onto
+printGraph onto
 
-toCyGraph matchRelationColorDefault onto |> CyGraph.show
-toCyGraph matchRelationColorDefault onto |> CyGraph.withLayout(Layout.initBreadthfirst <| Layout.LayoutOptions.Cose()) |> CyGraph.show
+toCyGraph matchRelationColorDefault true onto |> CyGraph.show
+toCyGraph matchRelationColorDefault true onto |> CyGraph.withLayout(Layout.initBreadthfirst <| Layout.LayoutOptions.Cose()) |> CyGraph.show
 
 let go = @"C:\Users\olive\Downloads\go.obo"
 let gobo = OboOntology.fromFile false go
-let gonto = ontologyToFGraph gobo
+let gonto = ontologyToFGraph true gobo
 
-toCyGraph matchRelationColorDefault gonto |> CyGraph.withLayout(Layout.initBreadthfirst <| Layout.LayoutOptions.Cose()) |> CyGraph.show
+toCyGraph matchRelationColorDefault true gonto |> CyGraph.withLayout(Layout.initBreadthfirst <| Layout.LayoutOptions.Cose()) |> CyGraph.show
+
+let goSlimAgr = @"C:\Users\olive\Downloads\goslim_agr.obo"
+let goSlimAgrObo = OboOntology.fromFile false goSlimAgr
+let goSlimAgrOnto = ontologyToFGraph true goSlimAgrObo
+
+toCyGraph matchRelationColorDefault false goSlimAgrOnto |> CyGraph.show
