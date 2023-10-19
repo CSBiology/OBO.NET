@@ -1,13 +1,13 @@
-#I "src/FsOboParser/bin/Debug/netstandard2.0"
-#I "src/FsOboParser/bin/Release/netstandard2.0"
-#r "FsOboParser.dll"
+#I "src/OBO.NET/bin/Debug/netstandard2.0"
+#I "src/OBO.NET/bin/Release/netstandard2.0"
+#r "OBO.NET.dll"
 
 #r "nuget: IsaDotNet"
 //#r "nuget: FsOboParser"
 #r "nuget: FSharpAux"
 
 
-open FsOboParser
+open OBO.NET
 
 open FSharpAux
 

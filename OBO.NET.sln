@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{13CB
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		global.json = global.json
+		graphPlayground.fsx = graphPlayground.fsx
 		LICENSE = LICENSE
 		playground.fsx = playground.fsx
 		README.md = README.md
@@ -34,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".ci", ".ci", "{C8635ABF-202
 		.github\workflows\build-and-test.yml = .github\workflows\build-and-test.yml
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OBO.NET.Graph", "src\OBO.NET.Graph\OBO.NET.Graph.fsproj", "{DB8ECF39-F369-437C-9853-2C0F3CEC679D}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OBO.NET.Graph", "src\OBO.NET.Graph\OBO.NET.Graph.fsproj", "{DB8ECF39-F369-437C-9853-2C0F3CEC679D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
