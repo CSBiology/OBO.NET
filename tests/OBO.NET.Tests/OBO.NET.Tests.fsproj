@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FsOboParser\OBO.NET.fsproj" />
+    <ProjectReference Include="..\..\src\OBO.NET\OBO.NET.fsproj" />
     <PackageReference Include="Expecto" Version="10.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
