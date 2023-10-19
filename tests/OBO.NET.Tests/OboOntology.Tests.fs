@@ -1,7 +1,7 @@
-﻿namespace FsOboParser.Tests
+﻿namespace OBO.NET.Tests
 
 open Expecto
-open FsOboParser
+open OBO.NET
 
 
 module OboOntologyTests =

@@ -1,4 +1,4 @@
-open FsOboParser.Tests
+open OBO.NET.Tests
 
 open Expecto
 

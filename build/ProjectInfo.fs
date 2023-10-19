@@ -2,11 +2,11 @@
 
 open Fake.Core
 
-let project = "FsOboParser"
+let project = "OBO.NET"
 
 let testProjects = 
     [
-        "tests/FsOboParser.Tests/FsOboParser.Tests.fsproj"
+        "tests/OBO.NET.Tests/OBO.NET.Tests.fsproj"
     ]
 
 let solutionFile  = $"{project}.sln"
