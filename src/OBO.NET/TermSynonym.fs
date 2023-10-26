@@ -4,14 +4,14 @@
 open DBXref
 
 
-//The value consists of a quote enclosed synonym text, a scope identifier, an optional synonym type name, and an optional dbxref list, like this:
-//synonym: "The other white meat" EXACT MARKETING_SLOGAN [MEAT:00324, BACONBASE:03021]
-
-//The synonym scope may be one of four values: EXACT, BROAD, NARROW, RELATED. If the first form is used to specify a synonym, the scope is assumed to be RELATED.
-
-//The synonym type must be the id of a synonym type defined by a synonymtypedef line in the header. If the synonym type has a default scope, that scope is used regardless of any scope declaration given by a synonym tag.
-
-//The dbxref list is formatted as specified in dbxref formatting. A term may have any number of synonyms.
+///The value consists of a quote enclosed synonym text, a scope identifier, an optional synonym type name, and an optional dbxref list, like this:
+///synonym: "The other white meat" EXACT MARKETING_SLOGAN [MEAT:00324, BACONBASE:03021]
+///
+///The synonym scope may be one of four values: EXACT, BROAD, NARROW, RELATED. If the first form is used to specify a synonym, the scope is assumed to be RELATED.
+///
+///The synonym type must be the id of a synonym type defined by a synonymtypedef line in the header. If the synonym type has a default scope, that scope is used regardless of any scope declaration given by a synonym tag.
+///
+///The dbxref list is formatted as specified in dbxref formatting. A term may have any number of synonyms.
 type TermSynonymScope =
     | Exact   
     | Broad   
@@ -27,13 +27,28 @@ type TermSynonymScope =
         | _         ->  printfn "[WARNING@L %i]unable to recognize %s as synonym scope" line s
                         Related
 
+    member this.ToOboString() =
+        match this with
+        | Exact     -> "EXACT"
+        | Broad     -> "BROAD"
+        | Narrow    -> "NARROW"
+        | Related   -> "RELATED"
+        
 
 type TermSynonym = {
     Text        : string
     Scope       : TermSynonymScope
     TypeName    : string
     DBXrefs     : DBXref list
-}
+} with
+    static member create(text: string, scope: TermSynonymScope, typeName: string, dbxrefs: DBXref list) = {
+        Text        = text
+        Scope       = scope
+        TypeName    = typeName
+        DBXrefs     = dbxrefs
+    }
+
+    member this.ToLine() = $"{this.Text} {this.Scope.ToOboString()} {this.TypeName} {this.DBXrefs}"
 
 
 module TermSynonym =

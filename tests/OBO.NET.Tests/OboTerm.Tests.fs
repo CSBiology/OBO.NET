@@ -22,4 +22,17 @@ module OboTermTests =
                     let expected = ["id:1", "related_to", "id:2"; "id:1", "unrelated_to", "id:3"]
                     Expect.sequenceEqual actual expected "is not equal"
             ]
+            testList "ToLines" [
+                testCase "synonym" <| fun _ ->
+                    let actual = 
+                        OboTerm.Create("NCBITaxon:562", Name="Escherichia coli", Synonyms=[TermSynonym.create("\"Bacillus coli\"", Related, "synonym", [])]) 
+                        |> OboTerm.toLines
+                        |> List.ofSeq
+                    let expected = [
+                        "id: NCBITaxon:562"
+                        "name: Escherichia coli"
+                        "synonym: \"Bacillus coli\" RELATED synonym []"
+                    ]
+                    Expect.sequenceEqual actual expected ""
+            ]
         ]
