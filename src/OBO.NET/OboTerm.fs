@@ -496,7 +496,7 @@ type OboTerm =
             if term.Definition = "" |> not then yield $"def: {term.Definition}"
             if term.Comment = "" |> not then yield $"comment: {term.Comment}"
             for subset in term.Subsets do yield $"subset: {subset}"
-            for synonym in term.Synonyms do yield $"synonym: {synonym}"
+            for synonym in term.Synonyms do yield $"synonym: {synonym.ToLine()}"
             for xref in term.Xrefs do yield $"xref: {xref.Name}"
             if term.BuiltIn then yield "builtin"
             for property_value in term.PropertyValues do yield $"property_value: {property_value}"
