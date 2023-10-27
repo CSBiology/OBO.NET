@@ -1,4 +1,4 @@
-### 0.5.0+dfa6547 (Released 2023-10-27)
+### 0.4.1+dfa6547 (Released 2023-10-27)
 * Additions:
     * [[#d4b6434](https://github.com/CSBiology/OBO.NET/commit/d4b6434bed77c96ad4c808effa87e20c4eabd18d)] Update Readme according to new name
 * Bugfixes:
