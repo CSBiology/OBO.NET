@@ -1,3 +1,9 @@
+### 0.5.0+dfa6547 (Released 2023-10-27)
+* Additions:
+    * [[#d4b6434](https://github.com/CSBiology/OBO.NET/commit/d4b6434bed77c96ad4c808effa87e20c4eabd18d)] Update Readme according to new name
+* Bugfixes:
+    * [[#73aa990](https://github.com/CSBiology/OBO.NET/commit/73aa99076164e1d9ad2b7cfe59e49e40a48f19dc)] Fix synonym obo writing #27 Add tests :white_check_mark:
+
 ### 0.4.0+d2b66f4 (Released 2023-10-19)
 * Additions:
     * [[#226c3eb](https://github.com/CSBiology/OBO.NET/commit/226c3eb371b537d8799d3c44a01f9e064062ceda)] Investigate current synonym functionalities
