@@ -3,7 +3,7 @@
 open DBXref
 open TermSynonym
 
-open ISADotNet
+open ARCtrl.ISA
 
 open System
 
@@ -515,12 +515,12 @@ type OboTerm =
 
     /// Translates an OBO `term` into an ISADotNet `OntologyAnnotation`.
     static member toOntologyAnnotation (term : OboTerm) =
-        let ref,num = OntologyAnnotation.splitAnnotation term.Id
-        OntologyAnnotation.fromString term.Name ref term.Id
+        OntologyAnnotation.fromString(term.Name,tan = term.Id)
+        |> fun o -> {o with TermSourceREF = o.TANInfo |> Option.map (fun t -> t.IDSpace)}
 
     /// Translates an ISADotNet `OntologyAnnotation` into an OBO `term`.
     static member ofOntologyAnnotation (term : OntologyAnnotation) =
-        OboTerm.Create(term.ShortAnnotationString,term.NameText)
+        OboTerm.Create(term.TermAccessionShort,term.NameText)
 
     /// Takes a relationship and returns a tuple consisting of the name of the relationship and the ID of the OboTerm it matches.
     static member deconstructRelationship relationship =

@@ -5,7 +5,7 @@ open DBXref
 //open OboTypeDef
 
 open FSharpAux
-open ISADotNet
+open ARCtrl.ISA
 
 open System
 
@@ -149,9 +149,9 @@ type OboOntology =
     /// For a given ontology term, finsd all equivalent terms that are connected via XRefs.
     ///
     /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
-    member this.GetEquivalentOntologyAnnotations(term : ISADotNet.OntologyAnnotation, ?Depth : int) =
+    member this.GetEquivalentOntologyAnnotations(term : OntologyAnnotation, ?Depth : int) =
             
-        let rec loop depth (equivalents : ISADotNet.OntologyAnnotation list) (lastLoop : ISADotNet.OntologyAnnotation list) =
+        let rec loop depth (equivalents : OntologyAnnotation list) (lastLoop : OntologyAnnotation list) =
             if equivalents.Length = lastLoop.Length then equivalents
             elif Depth.IsSome && Depth.Value < depth then equivalents
             else
@@ -159,16 +159,16 @@ type OboOntology =
                     equivalents
                     |> List.collect (fun t ->
                         let forward = 
-                            match this.TryGetTerm t.ShortAnnotationString with
+                            match this.TryGetTerm t.TermAccessionShort with
                             | Some term ->
                                 term.Xrefs
                                 |> List.map (fun xref ->
-                                    let id = OntologyAnnotation.createShortAnnotation "" xref.Name
+                                    let id = OntologyAnnotation.fromTermAnnotation(xref.Name).TermAccessionShort
                                     match this.TryGetOntologyAnnotation id with
                                     | Some oa ->
                                         oa
                                     | None -> 
-                                        OntologyAnnotation.fromString "" "" xref.Name
+                                        OntologyAnnotation.fromString(tan = xref.Name)
                                 )
                             | None ->
                                 []
@@ -193,24 +193,24 @@ type OboOntology =
     member this.GetEquivalentOntologyAnnotations(termId : string, ?Depth) =
         match Depth with 
         | Some d ->
-            OntologyAnnotation.fromAnnotationId termId         
+            OntologyAnnotation.fromTermAnnotation termId         
             |> fun oa -> this.GetEquivalentOntologyAnnotations(oa, d)
         | None -> 
-            OntologyAnnotation.fromAnnotationId termId    
+            OntologyAnnotation.fromTermAnnotation termId    
             |> this.GetEquivalentOntologyAnnotations
 
     /// For a given ontology term, finds all terms to which this term points in a "isA" relationship.
     ///
     /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
-    member this.GetParentOntologyAnnotations(term : ISADotNet.OntologyAnnotation, ?Depth) =
-        let rec loop depth (equivalents : ISADotNet.OntologyAnnotation list) (lastLoop : ISADotNet.OntologyAnnotation list) =
+    member this.GetParentOntologyAnnotations(term : OntologyAnnotation, ?Depth) =
+        let rec loop depth (equivalents : OntologyAnnotation list) (lastLoop : OntologyAnnotation list) =
             if equivalents.Length = lastLoop.Length then equivalents
             elif Depth.IsSome && Depth.Value < depth then equivalents
             else
                 let newEquivalents = 
                     equivalents
                     |> List.collect (fun t ->
-                        match this.TryGetTerm t.ShortAnnotationString with
+                        match this.TryGetTerm t.TermAccessionShort with
                         | Some term ->
                             term.IsA
                             |> List.map (fun isA ->
@@ -218,7 +218,7 @@ type OboOntology =
                                 | Some oa ->
                                     oa
                                 | None -> 
-                                    OntologyAnnotation.fromString "" "" isA
+                                    OntologyAnnotation.fromString(tan = isA)
                             )
                         | None ->
                             []
@@ -233,17 +233,17 @@ type OboOntology =
     member this.GetParentOntologyAnnotations(termId : string, ?Depth) =
         match Depth with 
         | Some d ->
-            OntologyAnnotation.fromAnnotationId termId
+            OntologyAnnotation.fromTermAnnotation termId
             |> fun oa -> this.GetParentOntologyAnnotations(oa, d)
         | None -> 
-            OntologyAnnotation.fromAnnotationId termId
+            OntologyAnnotation.fromTermAnnotation termId
             |> this.GetParentOntologyAnnotations
 
     /// For a given ontology term, finds all terms which point to this term "isA" relationship.
     ///
     /// Depth can be used to restrict the number of iterations by which neighbours of neighbours are checked.
-    member this.GetChildOntologyAnnotations(term : ISADotNet.OntologyAnnotation, ?Depth) =
-        let rec loop depth (equivalents : ISADotNet.OntologyAnnotation list) (lastLoop : ISADotNet.OntologyAnnotation list) =
+    member this.GetChildOntologyAnnotations(term : OntologyAnnotation, ?Depth) =
+        let rec loop depth (equivalents : OntologyAnnotation list) (lastLoop : OntologyAnnotation list) =
             if equivalents.Length = lastLoop.Length then equivalents
             elif Depth.IsSome && Depth.Value < depth then equivalents
             else
@@ -254,7 +254,7 @@ type OboOntology =
                         |> List.choose (fun pt -> 
                             let isChild = 
                                 pt.IsA
-                                |> List.exists (fun isA -> t.ShortAnnotationString = isA)
+                                |> List.exists (fun isA -> t.TermAccessionShort = isA)
                             if isChild then
                                 Some (OboTerm.toOntologyAnnotation(pt))
                             else
@@ -272,10 +272,10 @@ type OboOntology =
     member this.GetChildOntologyAnnotations(termId : string, ?Depth) =
         match Depth with 
         | Some d ->
-            OntologyAnnotation.fromAnnotationId termId
+            OntologyAnnotation.fromTermAnnotation termId
             |> fun oa -> this.GetChildOntologyAnnotations(oa, d)
         | None -> 
-            OntologyAnnotation.fromAnnotationId termId
+            OntologyAnnotation.fromTermAnnotation termId
             |> this.GetChildOntologyAnnotations
 
     /// Takes an OboTerm and returns all related terms in this ontology as a triple of input term, relationship, and related term.
