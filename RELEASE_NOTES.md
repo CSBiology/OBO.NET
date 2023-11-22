@@ -1,3 +1,7 @@
+### 0.4.2+eaa553e (Released 2023-11-22)
+* Additions:
+    * [[#d85e88b](https://github.com/CSBiology/OBO.NET/commit/d85e88ba9cd52ac5279b753c42b9be39e4717496)] replace isadotnet by arctrl.isa dependency
+
 ### 0.4.1+dfa6547 (Released 2023-10-27)
 * Additions:
     * [[#d4b6434](https://github.com/CSBiology/OBO.NET/commit/d4b6434bed77c96ad4c808effa87e20c4eabd18d)] Update Readme according to new name
