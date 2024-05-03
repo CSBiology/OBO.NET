@@ -11,7 +11,6 @@ open type System.Environment
 
 module CodeGenerationTests =
 
-    [<Tests>]
     let toUnderscoredNameTest =
         testList "toUnderscoredName" [
             testCase "returns correct underscored name" <| fun _ ->
@@ -20,7 +19,6 @@ module CodeGenerationTests =
                 Expect.equal actual expected "underscored name is not correct"
         ]
 
-    [<Tests>]
     let toTermSourceRefTest =
         testList "toTermSourceRef" [
             testCase "returns correct TermSourceRef" <| fun _ ->
@@ -29,7 +27,6 @@ module CodeGenerationTests =
                 Expect.equal actual expected "TermSourceRef is not correct"
         ]
 
-    [<Tests>]
     let toCodeStringTest =
         testList "toCodeString" [
             testCase "returns correct F# code" <| fun _ ->
@@ -38,7 +35,6 @@ module CodeGenerationTests =
                 Expect.equal actual expected "F# code is not correct"
         ]
 
-    [<Tests>]
     let toSourceCodeTest =
         testList "toSourceCode" [
             testCase "returns correct source code" <| fun _ ->
@@ -53,3 +49,6 @@ module CodeGenerationTests =
                     |> String.replace "\r" ""
                 Expect.equal actual expected "Source code is not correct"
         ]
+
+    [<Tests>]
+    let all = testList "CodeGeneration" [toUnderscoredNameTest; toTermSourceRefTest; toCodeStringTest; toSourceCodeTest]

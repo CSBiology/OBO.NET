@@ -24,7 +24,7 @@ module CodeGeneration =
 
     /// Returns true if a string contains special characters or starts with a number.
     let checkForSpecialCharacters str =
-        let spChs = System.Text.RegularExpressions.Regex("(^\d|[^a-zA-Z0-9_])")
+        let spChs = System.Text.RegularExpressions.Regex(@"(^\d|[^a-zA-Z0-9_])")
         (spChs.Match str).Success
 
     /// Takes a string and returns it with back ticks ("``") at the beginning and the end.
