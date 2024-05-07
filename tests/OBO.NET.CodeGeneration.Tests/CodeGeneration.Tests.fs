@@ -11,11 +11,13 @@ open type System.Environment
 
 module CodeGenerationTests =
 
+    let refObo = OboOntology.fromFile false (System.IO.Path.Combine(__SOURCE_DIRECTORY__, "References/ReferenceOboFile.obo"))
+
     let toUnderscoredNameTest =
         testList "toUnderscoredName" [
             testCase "returns correct underscored name" <| fun _ ->
                 let expected = "Investigation_Metadata"
-                let actual = List.head InvestigationMetadata.ontology.Terms |> CodeGeneration.toUnderscoredName
+                let actual = List.head refObo.Terms |> CodeGeneration.toUnderscoredName
                 Expect.equal actual expected "underscored name is not correct"
         ]
 
@@ -23,7 +25,7 @@ module CodeGenerationTests =
         testList "toTermSourceRef" [
             testCase "returns correct TermSourceRef" <| fun _ ->
                 let expected = "INVMSO"
-                let actual = List.head InvestigationMetadata.ontology.Terms |> CodeGeneration.toTermSourceRef
+                let actual = List.head refObo.Terms |> CodeGeneration.toTermSourceRef
                 Expect.equal actual expected "TermSourceRef is not correct"
         ]
 
@@ -31,7 +33,7 @@ module CodeGenerationTests =
         testList "toCodeString" [
             testCase "returns correct F# code" <| fun _ ->
                 let expected = $"        let Investigation_Metadata = CvTerm.create(\"INVMSO:00000001\", \"Investigation Metadata\", \"INVMSO\"){NewLine}{NewLine}"
-                let actual = List.head InvestigationMetadata.ontology.Terms |> CodeGeneration.toCodeString
+                let actual = List.head refObo.Terms |> CodeGeneration.toCodeString
                 Expect.equal actual expected "F# code is not correct"
         ]
 
@@ -42,7 +44,7 @@ module CodeGenerationTests =
                     $"namespace ARCTokenization.StructuralOntology{NewLine}{NewLine}    open ControlledVocabulary{NewLine}{NewLine}    module Investigation ={NewLine}{NewLine}        let Investigation_Metadata = CvTerm.create(\"INVMSO:00000001\", \"Investigation Metadata\", \"INVMSO\"){NewLine}{NewLine}        let ONTOLOGY_SOURCE_REFERENCE = CvTerm.create(\"INVMSO:00000002\", \"ONTOLOGY SOURCE REFERENCE\", \"INVMSO\"){NewLine}{NewLine}        let Term_Source_Name = CvTerm.create(\"INVMSO:00000003\", \"Term Source Name\", \"INVMSO\")"
                     |> String.replace "\r" ""
                 let actual = 
-                    CodeGeneration.toSourceCode "Investigation" InvestigationMetadata.ontology 
+                    CodeGeneration.toSourceCode "Investigation" refObo
                     |> String.splitS NewLine 
                     |> Array.take 11 
                     |> String.concat "\n"

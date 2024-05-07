@@ -7,6 +7,7 @@ let project = "OBO.NET"
 let testProjects = 
     [
         "tests/OBO.NET.Tests/OBO.NET.Tests.fsproj"
+        "tests/OBO.NET.CodeGeneration.Tests/OBO.NET.CodeGeneration.Tests.fsproj"
     ]
 
 let solutionFile  = $"{project}.sln"

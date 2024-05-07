@@ -9,9 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="references\ReferenceOboFile.obo" />
+    <Compile Include="References\ReferenceSourceFile.fs" />
     <Compile Include="CodeGeneration.Tests.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
+
+  <ItemGroup />
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OBO.NET\OBO.NET.fsproj" />

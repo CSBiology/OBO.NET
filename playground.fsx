@@ -1,3 +1,38 @@
+#I "src/OBO.NET/bin/Debug/netstandard2.0"
+#I "src/OBO.NET/bin/Release/netstandard2.0"
+#I "src/OBO.NET.CodeGeneration/bin/Debug/netstandard2.0"
+#I "src/OBO.NET.CodeGeneration/bin/Release/netstandard2.0"
+
+#r "OBO.NET.dll"
+#r "OBO.NET.CodeGeneration.dll"
+
+open OBO.NET
+open OBO.NET.CodeGeneration
+
+#r "nuget: FSharpAux"
+#r "nuget: ARCTokenization"
+
+open FSharpAux
+open ARCTokenization.Terms
+
+open type System.Environment
+
+let expected = 
+    $"namespace ARCTokenization.StructuralOntology{NewLine}{NewLine}    open ControlledVocabulary{NewLine}{NewLine}    module Investigation ={NewLine}{NewLine}        let Investigation_Metadata = CvTerm.create(\"INVMSO:00000001\", \"Investigation Metadata\", \"INVMSO\"){NewLine}{NewLine}        let ONTOLOGY_SOURCE_REFERENCE = CvTerm.create(\"INVMSO:00000002\", \"ONTOLOGY SOURCE REFERENCE\", \"INVMSO\"){NewLine}{NewLine}        let Term_Source_Name = CvTerm.create(\"INVMSO:00000003\", \"Term Source Name\", \"INVMSO\")"
+    |> String.replace "\r" ""
+let actual = 
+    CodeGeneration.toSourceCode "Investigation" InvestigationMetadata.ontology 
+    |> String.splitS NewLine 
+    |> Array.take 11 
+    |> String.concat "\n"
+    |> String.replace "\r" ""
+
+OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+
+
+// DEPRECATED
+
+
 #I "src/FsOboParser/bin/Debug/netstandard2.0"
 #I "src/FsOboParser/bin/Release/netstandard2.0"
 #r "FsOboParser.dll"
