@@ -42,12 +42,8 @@ module CodeGenerationTests =
     let toSourceCodeTest =
         testList "toSourceCode" [
             testCase "returns correct source code" <| fun _ ->
-                let expected = String.replace "\r" "" refSF
-                let actual = 
-                    CodeGeneration.toSourceCode "Investigation" refObo
-                    |> String.splitS NewLine 
-                    |> String.concat "\n"
-                    |> String.replace "\r" ""
+                let expected = refSF.ReplaceLineEndings()
+                let actual = (CodeGeneration.toSourceCode "Investigation" refObo).ReplaceLineEndings()
                 Expect.equal actual expected "Source code is not correct"
         ]
 
