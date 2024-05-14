@@ -6,12 +6,14 @@ open OBO.NET.CodeGeneration
 open FSharpAux
 open ARCTokenization.StructuralOntology
 open ARCTokenization.Terms
+open System.IO
 open type System.Environment
 
 
 module CodeGenerationTests =
 
-    let refObo = OboOntology.fromFile false (System.IO.Path.Combine(__SOURCE_DIRECTORY__, "References/ReferenceOboFile.obo"))
+    let refObo = OboOntology.fromFile false (Path.Combine(__SOURCE_DIRECTORY__, "References/ReferenceOboFile.obo"))
+    let refSF = File.ReadAllText (Path.Combine(__SOURCE_DIRECTORY__, "References/ReferenceSourceFile.fs"))
 
     let toUnderscoredNameTest =
         testList "toUnderscoredName" [
@@ -40,13 +42,10 @@ module CodeGenerationTests =
     let toSourceCodeTest =
         testList "toSourceCode" [
             testCase "returns correct source code" <| fun _ ->
-                let expected = 
-                    $"namespace ARCTokenization.StructuralOntology{NewLine}{NewLine}    open ControlledVocabulary{NewLine}{NewLine}    module Investigation ={NewLine}{NewLine}        let Investigation_Metadata = CvTerm.create(\"INVMSO:00000001\", \"Investigation Metadata\", \"INVMSO\"){NewLine}{NewLine}        let ONTOLOGY_SOURCE_REFERENCE = CvTerm.create(\"INVMSO:00000002\", \"ONTOLOGY SOURCE REFERENCE\", \"INVMSO\"){NewLine}{NewLine}        let Term_Source_Name = CvTerm.create(\"INVMSO:00000003\", \"Term Source Name\", \"INVMSO\")"
-                    |> String.replace "\r" ""
+                let expected = String.replace "\r" "" refSF
                 let actual = 
                     CodeGeneration.toSourceCode "Investigation" refObo
                     |> String.splitS NewLine 
-                    |> Array.take 11 
                     |> String.concat "\n"
                     |> String.replace "\r" ""
                 Expect.equal actual expected "Source code is not correct"

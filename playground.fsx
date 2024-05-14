@@ -27,7 +27,9 @@ let actual =
     |> String.concat "\n"
     |> String.replace "\r" ""
 
-OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+// OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+
+CodeGeneration.toFile "InvestigationMetadata" InvestigationMetadata.ontology @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceSourceFile2.fs"
 
 
 // DEPRECATED
