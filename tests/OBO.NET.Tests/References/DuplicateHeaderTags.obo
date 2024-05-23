@@ -1,0 +1,28 @@
+format-version: 0.0.1
+format-version: 0.0.2
+data-version: 0.0.1
+data-version: 0.0.2
+date: 01:01:1970 00:00
+date: 01:01:1970 00:01
+saved-by: Oliver Maus
+saved-by: Loliver Laus
+auto-generated-by: TalkGPT
+auto-generated-by: SpeakGPT
+default-relationship-id-prefix: OBO_REL
+default-relationship-id-prefix: BABO_REL
+
+[Term]
+id: Test:0001
+
+[Term]
+id: Test:0002
+
+[Typedef]
+id: Test:0003
+name: 
+range: 
+
+[Typedef]
+id: Test:0004
+name: 
+range: 
