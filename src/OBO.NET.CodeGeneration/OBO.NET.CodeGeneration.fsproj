@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OBO.NET\OBO.NET.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="CodeGeneration.fs" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <Authors>Oliver Maus, F# open source contributors</Authors>
+    <Description>An OBO file format to F# source code generator, written in F#.</Description>
+    <Summary>An OBO file format to F# source code generator, written in F#.</Summary>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/CSBiology/OBO.NET</PackageProjectUrl>
+    <PackageTags>ontology fsharp file obo codegeneration code generation</PackageTags>
+    <RepositoryUrl>https://github.com/CSBiology/OBO.NET</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <FsDocsLicenseLink>https://github.com/CSBiology/OBO.NET/blob/main/LICENSE</FsDocsLicenseLink>
+    <FsDocsReleaseNotesLink>https://github.com/CSBiology/OBO.NET/blob/main/RELEASE_NOTES.md</FsDocsReleaseNotesLink>
+  </PropertyGroup>
+
+</Project>

@@ -202,8 +202,9 @@ let fl1 = OboOntology.fromLines false (IO.File.ReadAllLines(IO.Path.Combine(__SO
 let fl2 = OboOntology.fromLines false (IO.File.ReadAllLines(IO.Path.Combine(__SOURCE_DIRECTORY__, "tests", "OBO.NET.Tests", "References", "HeaderTags_incorrect.obo")))
 let fl3 = OboOntology.fromLines false (IO.File.ReadAllLines(IO.Path.Combine(__SOURCE_DIRECTORY__, "tests", "OBO.NET.Tests", "References", "HeaderTags_duplicates.obo")))
 
+open ARCTokenization.Terms
 
-
+open type System.Environment
 
 let expected = 
     $"namespace ARCTokenization.StructuralOntology{NewLine}{NewLine}    open ControlledVocabulary{NewLine}{NewLine}    module Investigation ={NewLine}{NewLine}        let Investigation_Metadata = CvTerm.create(\"INVMSO:00000001\", \"Investigation Metadata\", \"INVMSO\"){NewLine}{NewLine}        let ONTOLOGY_SOURCE_REFERENCE = CvTerm.create(\"INVMSO:00000002\", \"ONTOLOGY SOURCE REFERENCE\", \"INVMSO\"){NewLine}{NewLine}        let Term_Source_Name = CvTerm.create(\"INVMSO:00000003\", \"Term Source Name\", \"INVMSO\")"
@@ -216,6 +217,9 @@ let actual =
     |> String.replace "\r" ""
 
 OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+// OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+
+CodeGeneration.toFile "InvestigationMetadata" InvestigationMetadata.ontology @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceSourceFile2.fs"
 
 
 // DEPRECATED
