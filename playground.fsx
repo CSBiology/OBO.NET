@@ -106,7 +106,7 @@ type OboOntology =
 //res.Groups["formatVersion"].Value
 //DateTime.ParseExact("31:12:2000 23:59", "dd:MM:yyyy HH:mm", Globalization.CultureInfo.InvariantCulture)
 
-    /// Reads an OBO Ontology containing term and type def stanzas from lines.
+    /// Reads an OBO Ontology containing document header tags, and term and type def stanzas from lines.
     static member fromLines verbose (input : seq<string>) =
 
         let rxFormatVersion                                 = createRegex RegexOptions.None @"format-version\s*:\s*(?<formatVersion>.+)"
@@ -198,8 +198,9 @@ type OboOntology =
 
         loop en [] [] String.Empty None None None None None [] [] [] [] None [] [] [] [] [] [] [] [] 0  // was 1 before
 
-DateTime.parse "24:04:2024 08:01"
-System.DateTime.ParseExact("24:04:2024 08:01", "dd:MM:yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture)
+let fl1 = OboOntology.fromLines false (IO.File.ReadAllLines(IO.Path.Combine(__SOURCE_DIRECTORY__, "tests", "OBO.NET.Tests", "References", "HeaderTags_correct.obo")))
+let fl2 = OboOntology.fromLines false (IO.File.ReadAllLines(IO.Path.Combine(__SOURCE_DIRECTORY__, "tests", "OBO.NET.Tests", "References", "HeaderTags_incorrect.obo")))
+let fl3 = OboOntology.fromLines false (IO.File.ReadAllLines(IO.Path.Combine(__SOURCE_DIRECTORY__, "tests", "OBO.NET.Tests", "References", "HeaderTags_duplicates.obo")))
 
 
 
