@@ -1,6 +1,9 @@
 ﻿namespace OBO.NET
 
 
+open System
+
+
 /// Functions for working with OboEntries.
 module OboEntries =
 
@@ -8,7 +11,8 @@ module OboEntries =
     let fromLines verbose (input : seq<string>) =
 
         let en = input.GetEnumerator()
-        let rec loop (en : System.Collections.Generic.IEnumerator<string>) entries lineNumber =
+
+        let rec loop (en : Collections.Generic.IEnumerator<string>) entries lineNumber =
 
             match en.MoveNext() with
             | true ->
@@ -26,5 +30,5 @@ module OboEntries =
 
     /// Reads an OBO file and returns a list of OboEntries.
     let fromFile verbose filepath =
-        System.IO.File.ReadAllLines filepath
+        IO.File.ReadAllLines filepath
         |> fromLines verbose
