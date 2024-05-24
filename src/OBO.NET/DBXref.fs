@@ -1,6 +1,9 @@
 ﻿namespace OBO.NET
 
 
+open FSharpAux
+open ControlledVocabulary
+
 open System
 
 
@@ -37,6 +40,8 @@ module DBXref =
 
     //Note that the trailing modifiers (like all trailing modifiers) do not need to be decoded or round-tripped by parsers; trailing modifiers can always be optionally ignored. However, all parsers must be able to gracefully ignore trailing modifiers. It is important to recognize that lines which accept a dbxref list may have a trailing modifier for each dbxref in the list, and another trailing modifier for the line itself.
 
+    // EXAMPLE (taken from GO_Slim Agr): "xref: RO:0002093"
+
     let trimComment (line : string) = 
         line.Split('!').[0].Trim()
 
@@ -49,4 +54,15 @@ module DBXref =
             Name = matches.Item("xrefName").Value
             Description = matches.Item("xrefDescription").Value
             Modifiers = matches.Item("xrefModifiers").Value
+        }
+
+    /// Creates a CvTerm (with an empty name) of a given DBXref.
+    let toCvTerm dbxref : CvTerm =
+        {
+            Name        = ""
+            Accession   = dbxref.Name
+            RefUri      = 
+                String.split ':' dbxref.Name
+                |> Array.head
+                |> String.trim
         }
