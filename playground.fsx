@@ -28,17 +28,47 @@ let r = term1.Xrefs |> List.exists (fun x1 -> term2.Xrefs |> List.exists (fun x2
 
 type OboOntology with
 
-    member this.AreTermsEquivalent(term1 : OboTerm, term2 : OboTerm) =
-        term1.Xrefs 
-        |> List.exists (
-            fun x1 -> 
-                term2.Id = x1.Name
-                &&
-                this.TreatXrefsAsEquivalents
-                |> List.exists (fun t -> term2.)
-        )
+//    member this.AreTermsEquivalent(term1 : OboTerm, term2 : OboTerm) =
+//        term1.Xrefs 
+//        |> List.exists (
+//            fun x1 -> 
+//                term2.Id = x1.Name
+//                &&
+//                this.TreatXrefsAsEquivalents
+//                |> List.exists (fun t -> t = (term2.ToCvTerm()).RefUri)
+//        )
 
+    /// Returns all terms of the OboOntology that have equivalent terms in a given second OboOntology.
+    member this.ReturnAllEquivalentTerms(ontology : OboOntology) =
+        if List.exists (fun x -> x = ontology.Terms.Head.ToCvTerm().RefUri) this.TreatXrefsAsEquivalents then
+            this.Terms
+            |> Seq.filter (
+                fun t ->
+                    List.isEmpty t.Xrefs |> not
+                    &&
+                    t.Xrefs
+                    |> List.exists (
+                        fun x -> 
+                            ontology.Terms
+                            |> List.exists (
+                                fun t2 -> 
+                                    (DBXref.toCvTerm x).Accession = t2.Id
+                            ) 
+                    ) 
+            )
+        else Seq.empty
 
+let testTerm1 = OboTerm.Create("test:001", Name = "Test1", Xrefs = [DBXref.parseDBXref "check:001"])
+let testOntology1 = OboOntology.Create([testTerm1], [], "", TreatXrefsAsEquivalents = ["check"])
+let testTerm2 = OboTerm.Create("check:001")
+
+testOntology1.AreTermsEquivalent(testTerm1, testTerm2)
+
+let testOntology2 = OboOntology.Create([testTerm2], [], "")
+
+testOntology1.ReturnAllEquivalentTerms testOntology2
+
+DBXref.ofString """test:1 "testDesc" {testMod}"""
 
 
 // DEPRECATED

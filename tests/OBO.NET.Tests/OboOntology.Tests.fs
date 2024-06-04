@@ -36,13 +36,19 @@ module OboOntologyTests =
             let testTerm4 =
                 OboTerm.Create(
                     "id:5",
-                    Name = "testTerm4"
+                    Name = "testTerm4",
+                    Xrefs = [DBXref.ofString "check:1"]
                 )
             let testTerm5 =
                 OboTerm.Create(
                     "id:6",
                     Name = "testTerm5",
                     Synonyms = [TermSynonym.parseSynonym None 0 "\"testTerm1\" EXACT []"; TermSynonym.parseSynonym None 1 "\"testTerm2\" BROAD []"; TermSynonym.parseSynonym None 2 "\"testTerm0\" NARROW []"]
+                )
+            let testTerm6 =
+                OboTerm.Create(
+                    "check:1",
+                    Name = "checkTerm1"
                 )
 
             let testFile1Path = Path.Combine(__SOURCE_DIRECTORY__, "References", "CorrectHeaderTags.obo")
@@ -125,7 +131,8 @@ module OboOntologyTests =
                     Expect.equal (Option.map (fun o -> o.TypeDefs) testFile1) typedefsExpected "Terms did not match"
             ]
 
-            let testOntology = OboOntology.Create([testTerm1; testTerm2; testTerm3; testTerm4; testTerm5], [], "")
+            let testOntology = OboOntology.Create([testTerm1; testTerm2; testTerm3; testTerm4; testTerm5], [], "", TreatXrefsAsEquivalents = ["check"])
+            let testOntology2 = OboOntology.Create([testTerm6], [], "")
 
             testList "GetRelatedTerms" [
                 testCase "returns correct related terms" <| fun _ ->
@@ -170,5 +177,16 @@ module OboOntologyTests =
                     let actual = testOntology.TryGetSynonyms testTerm5
                     let expected = seq {Exact, testTerm5, Some testTerm1; Broad, testTerm5, Some testTerm2; Narrow, testTerm5, None}
                     Expect.sequenceEqual actual expected "is not equal"
+            ]
+
+            testList "AreTermsEquivalent" [
+                testCase "checks equivalence correctly" <| fun _ ->
+                    Expect.isTrue (testOntology.AreTermsEquivalent(testTerm4, testTerm6)) "is not equal"
+            ]
+
+            testList "ReturnAllEquivalentTerms" [
+                testCase "returns correct terms" <| fun _ ->
+                    let actual = testOntology.ReturnAllEquivalentTerms(testOntology2)
+                    Expect.equal (Seq.head actual).Id testTerm4.Id "is not equal"
             ]
         ]
