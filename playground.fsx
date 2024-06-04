@@ -70,6 +70,25 @@ testOntology1.ReturnAllEquivalentTerms testOntology2
 
 DBXref.ofString """test:1 "testDesc" {testMod}"""
 
+open ARCTokenization.Terms
+
+open type System.Environment
+
+let expected = 
+    $"namespace ARCTokenization.StructuralOntology{NewLine}{NewLine}    open ControlledVocabulary{NewLine}{NewLine}    module Investigation ={NewLine}{NewLine}        let Investigation_Metadata = CvTerm.create(\"INVMSO:00000001\", \"Investigation Metadata\", \"INVMSO\"){NewLine}{NewLine}        let ONTOLOGY_SOURCE_REFERENCE = CvTerm.create(\"INVMSO:00000002\", \"ONTOLOGY SOURCE REFERENCE\", \"INVMSO\"){NewLine}{NewLine}        let Term_Source_Name = CvTerm.create(\"INVMSO:00000003\", \"Term Source Name\", \"INVMSO\")"
+    |> String.replace "\r" ""
+let actual = 
+    CodeGeneration.toSourceCode "Investigation" InvestigationMetadata.ontology 
+    |> String.splitS NewLine 
+    |> Array.take 11 
+    |> String.concat "\n"
+    |> String.replace "\r" ""
+
+OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+// OBO.NET.OboOntology.toFile @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceOboFile.obo" InvestigationMetadata.ontology
+
+CodeGeneration.toFile "InvestigationMetadata" InvestigationMetadata.ontology @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.CodeGeneration.Tests\References\ReferenceSourceFile2.fs"
+
 
 // DEPRECATED
 
