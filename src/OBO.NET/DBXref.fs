@@ -7,11 +7,32 @@ open ControlledVocabulary
 open System
 
 
-/// Representation of dbxrefs.
-type DBXref = {
+/// Representation of DBXrefs.
+type DBXref = 
+    {
         Name        : string
         Description : string
         Modifiers   : string
+    }
+
+    /// Parses a given string to a DBXref
+    static member ofString (v : string) =
+        let xrefRegex = Text.RegularExpressions.Regex("""(?<xrefName>^([^"{])*)(\s?)(?<xrefDescription>\"(.*?)\")?(\s?)(?<xrefModifiers>\{(.*?)}$)?""")
+        let matches = xrefRegex.Match(v.Trim()).Groups
+        {
+            Name        = matches.Item("xrefName")          .Value |> String.trim
+            Description = matches.Item("xrefDescription")   .Value |> String.trim
+            Modifiers   = matches.Item("xrefModifiers")     .Value |> String.trim
+        }
+
+    /// Returns the corresponding CvTerm of the DBXref with empty name.
+    member this.ToCvTerm() = {
+        Name        = ""
+        Accession   = this.Name
+        RefUri      = 
+            String.split ':' this.Name
+            |> Array.head
+            |> String.trim
     }
 
 
@@ -45,24 +66,10 @@ module DBXref =
     let trimComment (line : string) = 
         line.Split('!').[0].Trim()
 
-    let private xrefRegex = 
-        Text.RegularExpressions.Regex("""(?<xrefName>^([^"{])*)(\s?)(?<xrefDescription>\"(.*?)\")?(\s?)(?<xrefModifiers>\{(.*?)}$)?""")
-
+    [<Obsolete "Use `DBXref.ofString` instead">]
     let parseDBXref (v : string) =
-        let matches = xrefRegex.Match(v.Trim()).Groups
-        {
-            Name = matches.Item("xrefName").Value
-            Description = matches.Item("xrefDescription").Value
-            Modifiers = matches.Item("xrefModifiers").Value
-        }
+        DBXref.ofString v
 
     /// Creates a CvTerm (with an empty name) of a given DBXref.
-    let toCvTerm dbxref : CvTerm =
-        {
-            Name        = ""
-            Accession   = dbxref.Name
-            RefUri      = 
-                String.split ':' dbxref.Name
-                |> Array.head
-                |> String.trim
-        }
+    let toCvTerm (dbxref : DBXref) =
+        dbxref.ToCvTerm()
