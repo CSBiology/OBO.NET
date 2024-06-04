@@ -2,9 +2,12 @@ namespace OBO.NET.Tests
 
 open Expecto
 open OBO.NET
+open ControlledVocabulary
 
 
 module OboTermTests =
+
+    let testTerm1 = OboTerm.Create("test:001", Name = "TestTerm1")
 
     [<Tests>]
     let oboTermTest =
@@ -34,5 +37,13 @@ module OboTermTests =
                         "synonym: \"Bacillus coli\" RELATED synonym []"
                     ]
                     Expect.sequenceEqual actual expected ""
+            ]
+            testList "ToCvTerm" [
+                testCase "returns correct CvTerm" <| fun _ ->
+                    let actual = OboTerm.toCvTerm testTerm1
+                    let expected = CvTerm.create("test:001", "TestTerm1", "test")
+                    Expect.equal actual.RefUri expected.RefUri "TSRs are different"
+                    Expect.equal actual.Name expected.Name "Names are different"
+                    Expect.equal actual.Accession expected.Accession "TANs are different"
             ]
         ]
