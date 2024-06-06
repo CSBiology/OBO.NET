@@ -1,3 +1,30 @@
+### 0.5.0+d9e7b85 (Released 2024-6-6)
+* Additions:
+    * [[#4258b67](https://github.com/CSBiology/OBO.NET/commit/4258b67e229c1f056c1e2ed49d10e880b1f60a3b)] Update document header tag parsing (WIP)
+    * [[#b4c655a](https://github.com/CSBiology/OBO.NET/commit/b4c655a4559b2feb327b7f4485ef6e59a146d551)] Code generation (#32)
+    * [[#acc8dd6](https://github.com/CSBiology/OBO.NET/commit/acc8dd685e7e8a84d6f50b4e592bb28c39ac8f7f)] Play around in playground
+    * [[#c51cf40](https://github.com/CSBiology/OBO.NET/commit/c51cf4003129cb30ee51747bc00b876a81860b40)] Update type and functions
+    * [[#ebc77aa](https://github.com/CSBiology/OBO.NET/commit/ebc77aa99e94918775fb4037116d06b2c062ae3e)] Play around in playground
+    * [[#d83d8f2](https://github.com/CSBiology/OBO.NET/commit/d83d8f242f0333f73a4da8ebe9f934c6d4f41f5c)] Update functionality
+    * [[#7fa7799](https://github.com/CSBiology/OBO.NET/commit/7fa7799743a0008aef33ec44d17e0f59a155f787)] Replace string matching with Regex
+    * [[#5c03ec7](https://github.com/CSBiology/OBO.NET/commit/5c03ec7a98bc148bea7a0f502a179bc3812f74ae)] Finish `fromLines` parsing function
+    * [[#e56a985](https://github.com/CSBiology/OBO.NET/commit/e56a985f3d3352c20bafd2bdc5e955eefebc0df9)] Add new `fromLines` functionality to library
+    * [[#6d0a16b](https://github.com/CSBiology/OBO.NET/commit/6d0a16b57d1c46b3534b21e225ae42d28e14901c)] Update OboEntries functions for document header tags
+    * [[#4295eb3](https://github.com/CSBiology/OBO.NET/commit/4295eb3105c1dd93e112d93aefe363f2fcea5d27)] Add unit tests for new `fromLines` function
+    * [[#7244745](https://github.com/CSBiology/OBO.NET/commit/72447455159d5eac8b11aa988a6b551af1f74fde)] Merge branch 'main' into feature-DocumentHeaderTags-#33
+    * [[#f19426f](https://github.com/CSBiology/OBO.NET/commit/f19426f414f6172e1d528c0606ad9ca5ef5cd2fd)] Add ControlledVocabulary dependency
+    * [[#2e583a5](https://github.com/CSBiology/OBO.NET/commit/2e583a575a69371abacd6aea61eb61e8505e65b7)] Add `toCvTerm` functionality to DBXref
+    * [[#fdac911](https://github.com/CSBiology/OBO.NET/commit/fdac911ee06f5396c0f15fa4c4d1ab7c948fa416)] Merge pull request #35 from CSBiology/feature-DocumentHeaderTags-#33
+    * [[#50645d7](https://github.com/CSBiology/OBO.NET/commit/50645d76dad7d3d86d2cf41f705e33bca32c1569)] Add DBXref functionality and expand type
+    * [[#477e1e3](https://github.com/CSBiology/OBO.NET/commit/477e1e3465144f15f5de881ac8630f61f226a6ce)] Add function to return OboTerm as CvTerm
+    * [[#e3fc9d7](https://github.com/CSBiology/OBO.NET/commit/e3fc9d7b463958d6a9b1c645d3ff82dc15ab573b)] Add functions to check for and return equivalence among terms
+    * [[#6c89bdf](https://github.com/CSBiology/OBO.NET/commit/6c89bdfb8cc01f61101723fe708d1711c304c063)] Merge branch 'main' into feature-resolveXrefsEquivalent-#34
+    * [[#7c5f1e9](https://github.com/CSBiology/OBO.NET/commit/7c5f1e9f1b1dda006fb6ba640170b78667e9eaff)] Create manage-issues.yml (#37)
+    * [[#724ec35](https://github.com/CSBiology/OBO.NET/commit/724ec353f9969608512e40fb3216ccba1b7bb55e)] Do requested changes
+    * [[#d9e7b85](https://github.com/CSBiology/OBO.NET/commit/d9e7b85705b6e80020ffa077961bd68066389dd3)] Merge pull request #36 from CSBiology/feature-resolveXrefsEquivalent-#34
+* Bugfixes:
+    * [[#9c50770](https://github.com/CSBiology/OBO.NET/commit/9c50770e7d5c3eeaef9351d703a21a3a66143af3)] Fix bug (incorrect order and missing `List.rev`s)
+
 ### 0.4.2+eaa553e (Released 2023-11-22)
 * Additions:
     * [[#d85e88b](https://github.com/CSBiology/OBO.NET/commit/d85e88ba9cd52ac5279b753c42b9be39e4717496)] replace isadotnet by arctrl.isa dependency
