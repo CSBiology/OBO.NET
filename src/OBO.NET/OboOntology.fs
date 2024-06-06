@@ -519,6 +519,47 @@ type OboOntology =
     static member getSynonyms term (onto : OboOntology) =
         onto.GetSynonyms term
 
+    /// <summary>Checks if the given terms are treated as equivalent in the OboOntology.</summary>
+    /// <remarks>Note that term1 must be part of the OboOntology while term2 must be part of another ontology.</remarks>
+    member this.AreTermsEquivalent(term1 : OboTerm, term2 : OboTerm) =
+        term1.Xrefs 
+        |> List.exists (
+            fun x1 -> 
+                term2.Id = x1.Name
+                &&
+                this.TreatXrefsAsEquivalents
+                |> List.exists (fun t -> t = (term2.ToCvTerm()).RefUri)
+        )
+
+    /// <summary>Checks if the given terms are treated as equivalent in the given OboOntology.</summary>
+    /// <remarks>Note that term1 must be part of the given OboOntology while term2 must be part of another ontology.</remarks>
+    static member areTermsEquivalent term1 term2 (onto : OboOntology) =
+        onto.AreTermsEquivalent(term1, term2)
+
+    /// Returns all terms of the OboOntology that have equivalent terms in a given second OboOntology.
+    member this.ReturnAllEquivalentTerms(onto : OboOntology) =
+        if List.exists (fun x -> x = onto.Terms.Head.ToCvTerm().RefUri) this.TreatXrefsAsEquivalents then
+            this.Terms
+            |> Seq.filter (
+                fun t ->
+                    List.isEmpty t.Xrefs |> not
+                    &&
+                    t.Xrefs
+                    |> List.exists (
+                        fun x -> 
+                            onto.Terms
+                            |> List.exists (
+                                fun t2 -> 
+                                    (DBXref.toCvTerm x).Accession = t2.Id
+                            ) 
+                    ) 
+            )
+        else Seq.empty
+
+    /// Returns all terms of the first given OboOntology that have equivalent terms in the second given OboOntology.
+    static member returnAllEquivalentTerms (onto1 : OboOntology) onto2 =
+        onto1.ReturnAllEquivalentTerms(onto2)
+
 
 type OboTermDef = 
     {

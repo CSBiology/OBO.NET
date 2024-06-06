@@ -1,14 +1,38 @@
 ﻿namespace OBO.NET
 
 
+open FSharpAux
+open ControlledVocabulary
+
 open System
 
 
-/// Representation of dbxrefs.
-type DBXref = {
+/// Representation of DBXrefs.
+type DBXref = 
+    {
         Name        : string
         Description : string
         Modifiers   : string
+    }
+
+    /// Parses a given string to a DBXref
+    static member ofString (v : string) =
+        let xrefRegex = Text.RegularExpressions.Regex("""(?<xrefName>^([^"{])*)(\s?)(?<xrefDescription>\"(.*?)\")?(\s?)(?<xrefModifiers>\{(.*?)}$)?""")
+        let matches = xrefRegex.Match(v.Trim()).Groups
+        {
+            Name        = matches.Item("xrefName")          .Value |> String.trim
+            Description = matches.Item("xrefDescription")   .Value |> String.trim
+            Modifiers   = matches.Item("xrefModifiers")     .Value |> String.trim
+        }
+
+    /// Returns the corresponding CvTerm of the DBXref with empty name.
+    member this.ToCvTerm() = {
+        Name        = ""
+        Accession   = this.Name
+        RefUri      = 
+            String.split ':' this.Name
+            |> Array.head
+            |> String.trim
     }
 
 
@@ -37,16 +61,15 @@ module DBXref =
 
     //Note that the trailing modifiers (like all trailing modifiers) do not need to be decoded or round-tripped by parsers; trailing modifiers can always be optionally ignored. However, all parsers must be able to gracefully ignore trailing modifiers. It is important to recognize that lines which accept a dbxref list may have a trailing modifier for each dbxref in the list, and another trailing modifier for the line itself.
 
+    // EXAMPLE (taken from GO_Slim Agr): "xref: RO:0002093"
+
     let trimComment (line : string) = 
         line.Split('!').[0].Trim()
 
-    let private xrefRegex = 
-        Text.RegularExpressions.Regex("""(?<xrefName>^([^"{])*)(\s?)(?<xrefDescription>\"(.*?)\")?(\s?)(?<xrefModifiers>\{(.*?)}$)?""")
-
+    [<Obsolete "Use `DBXref.ofString` instead">]
     let parseDBXref (v : string) =
-        let matches = xrefRegex.Match(v.Trim()).Groups
-        {
-            Name = matches.Item("xrefName").Value
-            Description = matches.Item("xrefDescription").Value
-            Modifiers = matches.Item("xrefModifiers").Value
-        }
+        DBXref.ofString v
+
+    /// Creates a CvTerm (with an empty name) of a given DBXref.
+    let toCvTerm (dbxref : DBXref) =
+        dbxref.ToCvTerm()

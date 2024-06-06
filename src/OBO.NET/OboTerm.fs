@@ -3,9 +3,11 @@
 open DBXref
 open TermSynonym
 
-open ARCtrl.ISA
-
 open System
+
+open ARCtrl.ISA
+open ControlledVocabulary
+open FSharpAux
 
 
 /// Models the entities in an OBO Ontology.
@@ -539,6 +541,18 @@ type OboTerm =
     /// Takes an OboTerm and returns its relationships as a triple consisting of the input term's ID, the name of the relationship, and the related term's ID.
     static member getRelatedTermIds (term : OboTerm) =
         term.GetRelatedTermIds()
+
+    /// Returns the corresponding CvTerm of the OboTerm.
+    member this.ToCvTerm() =
+        let tsr = 
+            String.split ':' this.Id
+            |> Array.head
+            |> String.trim
+        CvTerm.create(this.Id, this.Name, tsr)
+
+    /// Returns the corresponding CvTerm of the given OboTerm.
+    static member toCvTerm (term : OboTerm) =
+        term.ToCvTerm()
 
 
 /// Representation of a the relation an OboTerm can have with other OboTerms.
