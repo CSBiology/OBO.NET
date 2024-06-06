@@ -187,6 +187,6 @@ module OboOntologyTests =
             testList "ReturnAllEquivalentTerms" [
                 testCase "returns correct terms" <| fun _ ->
                     let actual = testOntology.ReturnAllEquivalentTerms(testOntology2)
-                    Expect.equal (Seq.head actual).Id testTerm4.Id "is not equal"
+                    Expect.sequenceEqual actual (seq {testTerm4}) "is not equal"
             ]
         ]
