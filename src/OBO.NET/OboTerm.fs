@@ -5,7 +5,7 @@ open TermSynonym
 
 open System
 
-open ARCtrl.ISA
+open ARCtrl
 open ControlledVocabulary
 open FSharpAux
 
@@ -517,8 +517,7 @@ type OboTerm =
 
     /// Translates an OBO `term` into an ISADotNet `OntologyAnnotation`.
     static member toOntologyAnnotation (term : OboTerm) =
-        OntologyAnnotation.fromString(term.Name,tan = term.Id)
-        |> fun o -> {o with TermSourceREF = o.TANInfo |> Option.map (fun t -> t.IDSpace)}
+        OntologyAnnotation(term.Name,tan = term.Id)
 
     /// Translates an ISADotNet `OntologyAnnotation` into an OBO `term`.
     static member ofOntologyAnnotation (term : OntologyAnnotation) =
