@@ -6,7 +6,7 @@ open DBXref
 
 open FSharpAux
 open FSharpAux.Regex
-open ARCtrl.ISA
+open ARCtrl
 
 open System
 open System.IO
@@ -311,7 +311,7 @@ type OboOntology =
                                     | Some oa ->
                                         oa
                                     | None -> 
-                                        OntologyAnnotation.fromString(tan = xref.Name)
+                                        OntologyAnnotation(tan = xref.Name)
                                 )
                             | None ->
                                 []
@@ -361,7 +361,7 @@ type OboOntology =
                                 | Some oa ->
                                     oa
                                 | None -> 
-                                    OntologyAnnotation.fromString(tan = isA)
+                                    OntologyAnnotation(tan = isA)
                             )
                         | None ->
                             []
