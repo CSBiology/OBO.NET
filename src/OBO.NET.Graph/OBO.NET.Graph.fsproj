@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="AuxFunctions.fs" />
     <Compile Include="Graph.fs" />
+    <Compile Include="ContextGraph.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OBO.NET\OBO.NET.fsproj" />
-    <PackageReference Include="Graphoscope" Version="[0.2.0]" />
+    <PackageReference Include="Graphoscope" Version="[0.6.0-preview.1]" />
     <PackageReference Include="Cytoscape.NET" Version="[0.2.0]" />
   </ItemGroup>
 
