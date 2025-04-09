@@ -35,6 +35,7 @@ let runTestsWithCodeCov = BuildTask.create "RunTestsWithCodeCov" [clean; build] 
                                 "AltCoverCobertura","../../codeCov.xml"
                                 "AltCoverForce","true"
                             ]
+                            DisableInternalBinLog = true
                     };
                     Logger = Some "console;verbosity=detailed"
             }
