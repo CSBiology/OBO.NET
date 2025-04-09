@@ -17,3 +17,5 @@ open FSharpAux
 
 
 let res = OboOntology.fromFile true @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.Tests\References\WhitespaceAfterTerm.obo"
+
+let res2 = OboOntology.fromFile true @"C:\Repos\CSBiology\OBO.NET\tests\OBO.NET.Tests\References\WhitespaceAfterTypeDef.obo"

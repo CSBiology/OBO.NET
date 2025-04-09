@@ -55,17 +55,20 @@ module OboOntologyTests =
             let testFile2Path = Path.Combine(__SOURCE_DIRECTORY__, "References", "IncorrectHeaderTags.obo")
             let testFile3Path = Path.Combine(__SOURCE_DIRECTORY__, "References", "DuplicateHeaderTags.obo")
             let testFile4Path = Path.Combine(__SOURCE_DIRECTORY__, "References", "WhitespaceAfterTerm.obo")
+            let testFile5Path = Path.Combine(__SOURCE_DIRECTORY__, "References", "WhitespaceAfterTypeDef.obo")
             let testFile1 = try OboOntology.fromFile false testFile1Path |> Some with _ -> None
             let testFile2 = try OboOntology.fromFile false testFile2Path |> Some with _ -> None
             let testFile3 = try OboOntology.fromFile false testFile3Path |> Some with _ -> None
             let testFile4 = try OboOntology.fromFile false testFile4Path |> Some with _ -> None
+            let testFile5 = try OboOntology.fromFile false testFile5Path |> Some with _ -> None
 
             testList "fromFile" [
                 testCase "can read files" <| fun _ ->
                     Expect.isSome testFile1 $"Could not read testFile1: {testFile1Path}"
                     Expect.isSome testFile2 $"Could not read testFile2: {testFile2Path}"
                     Expect.isSome testFile3 $"Could not read testFile3: {testFile3Path}"
-                    Expect.isSome testFile4 $"Could not read testFile4: {testFile3Path}"
+                    Expect.isSome testFile4 $"Could not read testFile4: {testFile4Path}"
+                    Expect.isSome testFile5 $"Could not read testFile5: {testFile5Path}"
                 testCase "reads correct headers correctly" <| fun _ ->
                     let formatVersionActual                                 = Option.map (fun o -> o.FormatVersion)                                 testFile1
                     let dataVersionActual                                   = Option.map (fun o -> o.DataVersion)                                   testFile1 |> Option.flatten
@@ -134,6 +137,8 @@ module OboOntologyTests =
                     Expect.equal (Option.map (fun o -> o.TypeDefs) testFile1) typedefsExpected "Terms did not match"
                 testCase "reads Terms with whitespace correctly" <| fun _ ->
                     Expect.equal testFile4.Value.Terms.Length 4 "Number of terms did not match"
+                testCase "reads TypeDefs with whitespace correctly" <| fun _ ->
+                    Expect.equal testFile5.Value.TypeDefs.Length 4 "Number of typedefs did not match"
             ]
 
             let testOntology = OboOntology.Create([testTerm1; testTerm2; testTerm3; testTerm4; testTerm5], [], "", TreatXrefsAsEquivalents = ["check"])
