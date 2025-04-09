@@ -1,0 +1,43 @@
+﻿format-version: 0.0.1
+data-version: 0.0.1
+ontology: CL
+date: 01:01:1970 00:00
+saved-by: Oliver Maus
+auto-generated-by: TalkGPT
+subsetdef: GO_SLIM "GO Slim"
+subsetdef: GO_BASIC "GO Basic"
+import: http://purl.obolibrary.org/obo/go.owl
+import: http://purl.obolibrary.org/obo/cl.owl
+synonymtypedef: UK_SPELLING "British spelling" EXACT
+synonymtypedef: US_SPELLING "American spelling" EXACT
+idspace: GO urn:lsid:bioontology.org:GO: "gene ontology terms"
+idspace: GO urn:lsid:bioontology.org:GO: "gene ontology types"
+default-relationship-id-prefix: OBO_REL
+id-mapping: part_of OBO_REL:part_of
+id-mapping: has_a OBO_REL:has_a
+remark: test1
+remark: test2
+treat-xrefs-as-equivalent: CL 
+treat-xrefs-as-equivalent: GO 
+treat-xrefs-as-genus-differentia: CL part_of NCBITaxon:7955 
+treat-xrefs-as-genus-differentia: CL part_of NCBITaxon:7956 
+treat-xrefs-as-relationship: MA homologous_to
+treat-xrefs-as-relationship: MA analogous_to
+treat-xrefs-as-is_a: CL 
+treat-xrefs-as-is_a: GO 
+relax-unique-identifier-assumption-for-namespace: my_combined_ontology 
+relax-unique-identifier-assumption-for-namespace: my_combined_ontology2
+relax-unique-label-assumption-for-namespace: my_combined_ontology 
+relax-unique-label-assumption-for-namespace: my_combined_ontology2
+
+[Term] 
+id: Test:0001
+
+[Term]     
+id: Test:0002
+
+[Term]	
+id: Test:0003
+
+[Term]
+id: Test:0004

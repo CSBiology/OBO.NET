@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{13CB
 		global.json = global.json
 		LICENSE = LICENSE
 		playground.fsx = playground.fsx
+		playgroundInput.fsx = playgroundInput.fsx
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection

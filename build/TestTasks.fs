@@ -6,6 +6,9 @@ open Fake.DotNet
 open ProjectInfo
 open BasicTasks
 
+
+let standardParams = Fake.DotNet.MSBuild.CliArguments.Create ()
+
 let runTests = BuildTask.create "RunTests" [clean; build] {
     testProjects
     |> Seq.iter (fun testProject ->
@@ -15,6 +18,10 @@ let runTests = BuildTask.create "RunTests" [clean; build] {
                     Logger = Some "console;verbosity=detailed"
                     Configuration = DotNet.BuildConfiguration.fromString configuration
                     NoBuild = true
+                    MSBuildParams = {
+                        standardParams with
+                            DisableInternalBinLog = true
+                    }
             }
         ) testProject
     )
@@ -22,7 +29,6 @@ let runTests = BuildTask.create "RunTests" [clean; build] {
 
 // to do: use this once we have actual tests
 let runTestsWithCodeCov = BuildTask.create "RunTestsWithCodeCov" [clean; build] {
-    let standardParams = Fake.DotNet.MSBuild.CliArguments.Create ()
     testProjects
     |> Seq.iter(fun testProject -> 
         Fake.DotNet.DotNet.test(fun testParams ->
@@ -35,6 +41,7 @@ let runTestsWithCodeCov = BuildTask.create "RunTestsWithCodeCov" [clean; build] 
                                 "AltCoverCobertura","../../codeCov.xml"
                                 "AltCoverForce","true"
                             ]
+                            DisableInternalBinLog = true
                     };
                     Logger = Some "console;verbosity=detailed"
             }
