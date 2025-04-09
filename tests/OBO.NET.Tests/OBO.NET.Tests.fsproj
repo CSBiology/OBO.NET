@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="References\WhitespaceAfterTerm.obo" />
     <None Include="References\IncorrectHeaderTags.obo" />
     <None Include="References\DuplicateHeaderTags.obo" />
     <None Include="references\CorrectHeaderTags.obo" />
