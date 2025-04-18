@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -37,9 +37,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ARCtrl.Core" Version="2.0.1" />
+    <PackageReference Include="ARCtrl.Core" Version="2.2.0" />
     <PackageReference Include="ControlledVocabulary" Version="1.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="[1.1.1]" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="[8.0.0]" PrivateAssets="All" />
     <PackageReference Include="FSharpAux" Version="[2.0.0]" />
   </ItemGroup>
 
