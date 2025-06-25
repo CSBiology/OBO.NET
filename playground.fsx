@@ -15,9 +15,14 @@ open OboProvider
 
 let [<Literal>] oboPath = @"C:\Users\schne\source\repos\CSBiology\OBO.NET\tests\OBO.NET.Tests\References\go.obo"
 
-type go = OboTermsProvider<oboPath>
+type goTerms = OboTermsProvider<oboPath>
 
-go.``adult gena``.Synonyms.Length
+goTerms.``adult gena``.Synonyms.Length
+
+type goTypeDefs = OboTypeDefsProvider<oboPath>
+
+goTypeDefs.``part of``
+
 
 //open OBO.NET.CodeGeneration
 
