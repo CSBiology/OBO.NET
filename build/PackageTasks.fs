@@ -29,6 +29,7 @@ let pack = BuildTask.create "Pack" [clean; build; runTests] {
                             "Version",stableVersionTag
                             "PackageReleaseNotes",  (release.Notes |> List.map replaceCommitLink |> String.concat "\r\n" )
                         ] @ p.MSBuildParams.Properties)
+                        DisableInternalBinLog = true
                     }
                 {
                     p with 
@@ -51,6 +52,7 @@ let packPrerelease = BuildTask.create "PackPrerelease" [setPrereleaseTag; clean;
                                     "Version", prereleaseTag
                                     "PackageReleaseNotes",  (release.Notes |> List.map replaceCommitLink  |> String.toLines )
                                 ] @ p.MSBuildParams.Properties)
+                                DisableInternalBinLog = true
                             }
                         {
                             p with 

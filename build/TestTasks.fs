@@ -15,6 +15,10 @@ let runTests = BuildTask.create "RunTests" [clean; build] {
                     Logger = Some "console;verbosity=detailed"
                     Configuration = DotNet.BuildConfiguration.fromString configuration
                     NoBuild = true
+                    MSBuildParams = {
+                        testParams.MSBuildParams with
+                            DisableInternalBinLog = true
+                    }
             }
         ) testProject
     )
@@ -35,6 +39,7 @@ let runTestsWithCodeCov = BuildTask.create "RunTestsWithCodeCov" [clean; build] 
                                 "AltCoverCobertura","../../codeCov.xml"
                                 "AltCoverForce","true"
                             ]
+                            DisableInternalBinLog = true
                     };
                     Logger = Some "console;verbosity=detailed"
             }

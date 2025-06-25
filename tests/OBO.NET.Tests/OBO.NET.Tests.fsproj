@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="References\go.obo" />
     <None Include="References\IncorrectHeaderTags.obo" />
     <None Include="References\DuplicateHeaderTags.obo" />
     <None Include="references\CorrectHeaderTags.obo" />
@@ -16,6 +17,7 @@
     <Compile Include="TermSynonym.Tests.fs" />
     <Compile Include="OboTerm.Tests.fs" />
     <Compile Include="OboOntology.Tests.fs" />
+    <Compile Include="TypeProviderTests.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 

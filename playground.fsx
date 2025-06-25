@@ -17,7 +17,7 @@ let [<Literal>] oboPath = @"C:\Users\schne\source\repos\CSBiology\OBO.NET\tests\
 
 type go = OboTermsProvider<oboPath>
 
-go.``adult gena``
+go.``adult gena``.Synonyms.Length
 
 //open OBO.NET.CodeGeneration
 
