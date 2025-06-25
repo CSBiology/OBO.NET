@@ -21,6 +21,9 @@
     <Compile Include="OboEntries.fs" />
     <Compile Include="OboOntology.fs" />
     <Compile Include="FastOboGraph.fs" />
+    <Compile Include="TypeProviderDeps\ProvidedTypes.fsi" />
+    <Compile Include="TypeProviderDeps\ProvidedTypes.fs" />
+    <Compile Include="OboProvider.fs" />
   </ItemGroup>
 
   <PropertyGroup>

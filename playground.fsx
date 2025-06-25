@@ -2,16 +2,26 @@
 #I "src/OBO.NET/bin/Release/netstandard2.0"
 #I "src/OBO.NET.CodeGeneration/bin/Debug/netstandard2.0"
 #I "src/OBO.NET.CodeGeneration/bin/Release/netstandard2.0"
+#r "nuget: FSharpAux"
+#r "nuget: ARCTokenization"
 
 #r "OBO.NET.dll"
 //#r "OBO.NET.CodeGeneration.dll"
 
 open OBO.NET
 open OBO.NET.DBXref
+
+open OboProvider
+
+let [<Literal>] oboPath = @"C:\Users\schne\source\repos\CSBiology\OBO.NET\tests\OBO.NET.Tests\References\go.obo"
+
+type go = OboTermsProvider<oboPath>
+
+go.``adult gena``
+
 //open OBO.NET.CodeGeneration
 
-#r "nuget: FSharpAux"
-#r "nuget: ARCTokenization"
+
 
 open FSharpAux
 open FSharpAux.Regex
