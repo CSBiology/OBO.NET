@@ -1,3 +1,7 @@
+### 0.6.0 (Released 2024-06-25)
+
+Add obo type provider as part of an ARC hackathon
+
 ### 0.5.0+d9e7b85 (Released 2024-6-6)
 * Additions:
     * [[#4258b67](https://github.com/CSBiology/OBO.NET/commit/4258b67e229c1f056c1e2ed49d10e880b1f60a3b)] Update document header tag parsing (WIP)
